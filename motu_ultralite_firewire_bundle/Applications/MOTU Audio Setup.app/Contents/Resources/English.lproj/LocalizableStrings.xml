@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<resource_list>
+  <XSET name="LocalizedStrings">
+
+<!-- Menu Items /////////////////////////////////////////////////////////// -->
+
+<!-- File Menu -->
+<TEXT name="File"                                >File</TEXT>
+<TEXT name="Open"                                >Open</TEXT>
+<TEXT name="MyFileMenuItem"                      >My File Menu Item</TEXT>
+<TEXT name="Close"                               >Close</TEXT>
+
+<TEXT name="Window"                              >Window</TEXT>
+
+<!-- Required -->
+<TEXT name="MBOK"                                >OK</TEXT>
+<TEXT name="MBCancel"                            >Cancel</TEXT>
+<TEXT name="MBYes"                               >Yes</TEXT>
+<TEXT name="MBNo"                                >No</TEXT>
+
+<TEXT name="Font1"                               >Helvetica Neue Bold</TEXT>
+<TEXT name="Font2"                               >Helvetica Neue Condensed Bold</TEXT>
+<TEXT name="Font3"                               >Helvetica Neue Bold Italic</TEXT>
+<TEXT name="Font4"                               >Helvetica Neue</TEXT>
+
+<TEXT name="Can't Undo"                          >Can't Undo</TEXT>
+<TEXT name="Can't Redo"                          >Can't Redo</TEXT>
+
+  </XSET>
+</resource_list>

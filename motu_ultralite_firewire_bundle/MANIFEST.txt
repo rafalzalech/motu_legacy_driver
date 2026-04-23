@@ -1,0 +1,23 @@
+Bundle root: motu_ultralite_firewire_bundle
+Generated: 2026-04-23
+
+Installed items mirrored in this bundle:
+- /Applications/MOTU Audio Setup.app
+- /Applications/MOTU Audio Tools.app
+- /Applications/MOTU Discovery.app
+- /Applications/MOTU Pro Audio System Extension.app
+- /Applications/MOTU SMPTE Setup.app
+- /Library/Application Support/MOTU
+- /Library/Audio/MIDI Devices/MOTU
+- /Library/Extensions/MOTUFireWireAudio.kext
+- /Library/LaunchAgents/com.motu.MOTULauncher.plist
+- /Library/LaunchAgents/com.motu.proaudio.HTTPServer.launchd.plist
+- /Library/LaunchAgents/com.motu.proaudio.discovery.plist
+- /Library/LaunchDaemons/com.motu.driver.proaudio.dextmidiproxy.plist
+
+Source notes:
+- Everything except the kext was copied from the current live install on this Mac.
+- /Library/Extensions/MOTUFireWireAudio.kext was copied from:
+  /Users/rafalzalech/Desktop/MOTU/Library/Extensions/MOTUFireWireAudio.kext
+  because the live installed kext is root-only and unreadable without sudo.
+- Kext version from Info.plist: 1.6 88494

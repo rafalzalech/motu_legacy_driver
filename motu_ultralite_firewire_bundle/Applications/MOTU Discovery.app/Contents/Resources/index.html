@@ -1,0 +1,815 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+<style>
+html, body
+{   
+  background-color: #1f2022;
+  background-image: linear-gradient(0deg, rgba(59, 62, 66, 0) 0%, rgba(34, 35, 38, 0) 100%);
+  cursor: default;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  width: 100%;
+  height: 100%;
+}
+html, body, h1, h2, h3, p, ol, ul, li, a {
+  padding: 0;
+  border: 0;
+  margin: 0;
+}
+a {
+  color:inherit;
+  text-decoration: none;
+}
+iframe {
+  height: 590px;
+  width: 100%;
+  border: 0px;
+  overflow-y: auto;
+}
+
+.mainWrapper {
+  height: 100%;
+}
+
+.leftPane {
+  border-radius: 5px;
+  background-image: -moz-linear-gradient( 90deg, rgb(43,45,48) 0%, rgb(53, 54, 59) 100%);
+  background-image: -webkit-linear-gradient( 90deg, rgb(43,45,48) 0%, rgb(53, 54, 59) 100%);
+  background-image: -ms-linear-gradient( 90deg, rgb(43,45,48) 0%, rgb(53, 54, 59) 100%);
+  box-shadow: 0px 10px 18px 0px rgba(7, 7, 7, 0.23);
+  position: relative;
+  left: 0px;
+  top: 0px;
+  width: 180px;
+  height: 100%;
+  display: block;
+  font-size: 14px;
+  font-family: "Helvetica";
+  color: rgb(192, 192, 192);
+  float: left;
+}
+.rightPane {
+  float: left;
+  width: calc(100% - 180px);
+  /*background-image: url(images/no-device-background.jpg);*/
+  background-size: 100% 100%;
+  height: 100%;
+  position: relative;
+}
+.rightPane.noDevice[tab="0"] {
+  text-align: center;
+}
+.rightPane.noDevice[tab="0"] div {
+  display: none;
+}
+.rightPane.noDevice[tab="0"] .noDeviceConnectedMessage {
+  display: inline-block;
+  opacity: 0;
+  transition: opacity 0.25s linear;
+}
+.mainWrapper[loading="true"] .rightPane[tab="4"] .tabView {
+  display: none;
+}
+.mainWrapper[loading="false"] .rightPane.noDevice[tab="0"] .noDeviceConnectedMessage {
+  font-size: 20px;
+  font-family: "Helvetica";
+  font-weight: lighter;
+  color: #01a6fb;
+  width: 450px;
+  height: 75px;
+  background-color: rgba(56, 56, 56, 0.4);
+  text-align: center;
+  margin: auto;
+  margin-top: 200px;
+  padding: 35px;
+  opacity: 1;
+}
+.mainWrapper[loading="true"] .rightPane[tab="0"] .overlay .spinner,
+.mainWrapper[loading="true"] .rightPane[tab="4"] .overlay .spinner {
+  border: 10px solid rgba(56, 56, 56, 0.4); 
+  border-top: 10px solid #01a6fb;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  animation: spin 1.2s linear infinite;
+  background: none;
+  padding: 0px;
+  margin-top: 250px;
+  display: inline-block;
+}
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+.mainWrapper[loading="false"] .rightPane.noDevice[tab="0"] .noDeviceConnectedMessage:before {
+  content: 'There are no devices currently connected.';
+}
+.mainWrapper[loading="false"] .rightPane.noDevice[tab="0"] .noDeviceConnectedMessage:after {
+  content: 'Make sure your interface is connected to your computer via Thunderbolt or USB cables.';
+  display: block;
+  color: #939393;
+  font-size: 15px;
+  padding-top: 15px;
+}
+.overlay {
+  display: none;
+  text-align: center;
+  position: absolute;
+  width: 100%;
+  height: 600px;
+}
+.tabView {
+  display: none;
+}
+.rightPane[tab="0"] .tabView[tab="0"],
+.rightPane[tab="1"] .tabView[tab="1"],
+.rightPane[tab="2"] .tabView[tab="2"],
+.rightPane[tab="3"] .tabView[tab="3"],
+.rightPane[tab="4"] .tabView[tab="4"],
+.mainWrapper[loading="true"] .rightPane[tab="0"] .overlay,
+.mainWrapper[loading="true"] .rightPane[tab="4"] .overlay
+{
+  display: block;
+}
+.mainWrapper[loading="true"] .rightPane[tab="0"] .overlay .spinnerText,
+.mainWrapper[loading="true"] .rightPane[tab="4"] .overlay .spinnerText {
+  display: block;
+  font-family: "Helvetica";
+  font-weight: lighter;
+  color: #939393;
+  font-size: 15px;
+  margin-top: 10px;
+}
+.mainWrapper[loading="true"] .leftTabs[value="4"] {
+  cursor: wait;
+}
+.mainWrapper[loading="true"] .leftTabs[value="4"] .tab {
+  pointer-events: none;
+}
+.leftPane .motuLogo
+{
+left: 30px;
+top: 53px;
+position: relative;
+width: 120px;
+}
+#connectedDevice {
+margin-left: 30px;
+margin-right: 30px;
+margin-top: 46px;
+height: 508px;
+font-size: 13px;
+font-weight: lighter;
+}
+#connectedDeviceImage
+{
+width: 100%;
+height: 316px;
+margin-top: 30px;
+transition: background-image 100ms ease-in 100ms;
+background-size: 100%;
+background-repeat: no-repeat;
+}
+#connectedDeviceImage[model="112D"]
+{
+  background-image: url(images/112D.png);
+}
+#connectedDeviceImage[model="1248"]
+{
+  background-image: url(images/1248.png);
+}
+#connectedDeviceImage[model="16A"]
+{
+  background-image: url(images/16A.png);
+}
+#connectedDeviceImage[model="24Ai"]
+{
+  background-image: url(images/24Ai.png);
+}
+#connectedDeviceImage[model="24Ao"]
+{
+  background-image: url(images/24Ao.png);
+}
+#connectedDeviceImage[model="624"]
+{
+  background-image: url(images/624.png);
+}
+#connectedDeviceImage[model="828ES"]
+{
+  background-image: url(images/828ES.png);
+}
+#connectedDeviceImage[model="8A"]
+{
+  background-image: url(images/8A.png);
+}
+#connectedDeviceImage[model="8D"]
+{
+  background-image: url(images/8D.png);
+}
+#connectedDeviceImage[model="8M"]
+{
+  background-image: url(images/8M.png);
+}
+#connectedDeviceImage[model="UltraLite-mk4"],
+#connectedDeviceImage[model="UltraLite-mk4 ES"]
+{
+  background-image: url(images/UltraLite-Mk4.png);
+}
+#connectedDeviceImage[model="Stage-B16"]
+{
+  background-image: url(images/Stage-B16.png);
+}
+#connectedDeviceImage[model="Monitor 8"]
+{
+  background-image: url(images/Monitor-8.png);
+}
+#connectedDeviceImage[model="UltraLite AVB"],
+#connectedDeviceImage[model="UltraLiteES AVB"],
+#connectedDeviceImage[model="UltraLite AVB ES"]
+{
+  background-image: url(images/UltraLite-AVB.png);
+}
+#connectedDeviceImage[model="8PreES"]
+{
+  background-image: url(images/8PreES.png);
+}
+#connectedDeviceImage[model="LP32"]
+{
+  background-image: url(images/LP32.png);
+}
+#connectedDeviceImage[model="M64"]
+{
+  background-image: url(images/M64.png);
+}
+
+#connectedDeviceName {
+  font-size: 25px;
+  font-family: "Helvetica";
+  font-weight: lighter;
+  color: #01a6fb;
+  display: inline-block;
+}
+#deviceConnectedBy
+{
+display: block;
+font-size: 12px;
+font-family: "Helvetica";
+font-weight: lighter;
+color: #939393;
+height: 15px;
+top: 55px;
+left: 0px;
+margin-top: 4px;
+}
+#deviceConnectedBy:before 
+{
+width: 19px;
+height: 15px;
+background-repeat: no-repeat;
+background-position: center center;
+content: '';
+display: inline-block;
+margin-right: 8px;
+vertical-align: middle;
+}
+#deviceConnectedBy[connection="usb"]:before
+{
+  background-size: 100% auto;
+  background-image: url(images/USB.png);
+}
+#deviceConnectedBy[connection="thunderbolt"]:before
+{
+  background-size: auto 100%;
+  background-image: url(images/Thunderbolt.png);
+}
+#deviceConnectedBy[connection="usb"]:after
+{
+  content: 'Connected via USB';
+}
+#deviceConnectedBy[connection="thunderbolt"]:after
+{
+  content: 'Connected via Thunderbolt';
+}
+.leftTabs
+{
+  position: absolute;
+  top: 216px;
+  width: 100%;
+  font-size: 15px;
+}
+.leftTabs .tab:first-of-type 
+{
+  border-top: solid 1px rgb(60, 61, 65);
+}
+.leftTabs .tab
+{
+  height: 40px;
+  line-height: 40px;
+  border-bottom: solid 1px rgb(60, 61, 65);
+  padding-left: 25px;
+}
+.leftTabs .tab:hover
+{
+  background-color: #1f2022;
+  color: white;
+  cursor: pointer;
+}
+.leftTabs[value="0"] .tab[value="0"],
+.leftTabs[value="1"] .tab[value="1"],
+.leftTabs[value="2"] .tab[value="2"],
+.leftTabs[value="3"] .tab[value="3"],
+.leftTabs[value="4"] .tab[value="4"]
+{
+  background-color: #01a6fb;
+  color: white;
+}
+.infoRow
+{
+  font-family: "Helvetica";
+  width: 100%
+  
+}
+.infoRow > div 
+{
+line-height: 20px;
+height: 20px;
+}
+.driverInfoRow
+{
+  color: #939393;
+  text-align: right;
+}
+.driverInfoRow.update
+{
+  color: #01a6fb;
+}
+.btn
+{
+font-family: "Helvetica";
+background-color: #01a6fb;
+color: white;
+width: 200px;
+line-height: 30px;
+text-align: center;
+border-radius: 25px;
+display: inline-block;
+float: right;
+border: 1px solid #01a6fb;
+align-self: center;
+margin-left: auto;
+position: relative;
+padding-right: 17px;
+}
+.btn:hover
+{
+  cursor: pointer;
+  border-color: white;
+}
+.btn.parentHover
+{
+  display: none;
+}
+.btn.launchCtrlApp:before
+{
+content: 'Open Pro Audio Control';
+font-size: 12px;
+}
+.btn.launchCtrlApp:after
+{
+background-image: url(images/CtrlIcon.png);
+background-repeat: no-repeat;
+width: 18px;
+height: 15px;
+content: '';
+display: inline-block;
+background-size: 100% 100%;
+margin-left: 9px;
+position: absolute;
+top: 7px;
+}
+.infoRow.firmware
+{
+margin-top: 20px;
+border-top: 1px solid #3d3d3e;
+border-bottom: 1px solid #3d3d3e;
+color: #53cfa8;
+padding-top: 10px;
+padding-bottom: 10px;
+}
+#firmwareVersionLabel,
+#firmwareVersion
+{
+  color: #939393;
+}
+#firmwareUpdateAvailable
+{
+  float: right;
+  text-decoration: underline;
+  cursor: pointer;
+}
+.firmwareInfoRow.rightAlign
+{
+  text-align: right;
+}
+#multipleDevices
+{
+  border-top: 1px solid #3d3d3e;
+  width: 100%;
+  position: relative;
+}
+#multipleDevices .next
+{
+float: right;
+width: 30px;
+height: 45px;
+background-image: url(images/Next.png);
+background-size: auto 100%;
+background-repeat: no-repeat;
+}
+#multipleDevices .next:hover
+{
+  background-image: url(images/Next_Hover.png);
+  cursor: pointer;
+}
+#nextDeviceName
+{
+font-size: 15px;
+font-family: "Helvetica";
+font-weight: lighter;
+color: rgb(192, 192, 192);
+position: absolute;
+top: 15px;
+left: 340px;
+width: 300px;
+text-align: right;
+text-overflow: ellipsis;
+overflow: hidden;
+white-space: nowrap;
+}
+.devices
+{
+  margin: 30px;
+  font-family: "Helvetica";
+  color: rgb(192, 192, 192);
+  font-size: 15px;
+}
+.devicesDescription
+{
+  display: inline-block;
+}
+.hideSwitches
+{
+  display: inline-block;
+  float: right;
+}
+.hideSwitchesLabel
+{
+  display: inline-block;
+  margin-right: 10px;
+}
+.checkbox
+{
+  width: 15px;
+  height: 15px;
+  border: 2px solid #656567;
+  display: inline-block;
+  vertical-align: -4px;
+}
+.checkbox:hover
+{
+  border-color: white;
+  cursor: pointer;
+}
+.checkbox[value="1"]
+{
+  background-color: #01a6fb;
+}
+.checkboxLabel {
+  display: inline-block;
+  margin-left: 8px;
+  margin-right: 8px;
+  font-size: 15px;
+}
+.searchFilter
+{
+  margin-top: 60px;
+}
+.search input
+{
+width: 300px;
+height: 30px;
+color: rgb(192, 192, 192);
+background-color: #656567;
+border: none;
+border-radius: 4px;
+padding-left: 15px;
+font-size: 14px;
+background-image: url(images/Search.png);
+background-repeat: no-repeat;
+background-position: 285px;
+background-size: 18px 18px;
+}
+.search input::-ms-clear {
+    display: none;
+}
+.search input:focus
+{
+  outline: none;
+}
+.search ::placeholder
+{
+  color: rgb(192, 192, 192);
+}
+.searchFilter .filter
+{
+  text-decoration: underline;
+}
+.search, .filterContainer
+{
+  display: inline-block;
+}
+.filterContainer
+{
+display: inline-block;
+text-align: right;
+float: right;
+padding-top: 8px;
+}
+.filterLabel, .filter 
+{
+  margin-left: 20px;
+}
+.deviceList 
+{
+  margin-top: 30px;
+  padding-top: 1px;
+  height: 399px;
+  overflow-y: scroll;
+}
+.deviceList .deviceRow
+{
+  height: 50px;
+  line-height: 50px;
+  border-bottom: solid 1px #3d3d3e;
+  border-top: solid 1px #3d3d3e;
+  margin-top: -1px;
+  box-sizing: border-box;
+  position: relative;
+  display: flex;
+  margin-right: 15px;
+}
+.deviceList[flex="false"] .deviceRow
+{
+  padding-top: 7px;
+}
+.deviceList[flex="false"] .deviceRow .deviceRowHost
+{
+  margin-bottom: 7px;
+}
+.deviceList[flex="false"] .deviceRow .deviceRowName
+{
+  display: inline-table;
+  margin-top: -9px;
+}
+.deviceList .deviceRow:hover .btn.parentHover
+{
+  display: inline-block;
+}
+.deviceList .deviceRow:hover
+{
+  background-color: rgb(28, 35, 43);
+  border-color: #01a6fb;
+  z-index: 1;
+  cursor: pointer;
+  color: #01a6fb;
+}
+.deviceRowFirmwareIcon
+{
+  width: 28px;
+  height: 28px;
+  display: inline-block;
+  align-self: center;
+  margin-left: 10px;
+}
+.deviceRowFirmwareIcon.true
+{
+  background-image: url(images/Firmware.png);
+}
+.deviceRowIcon
+{
+width: 74px;
+height: 33px;
+  display: inline-block;
+  margin-left: 30px;
+  align-self: center;
+  background-repeat: no-repeat;
+  background-size: auto 100%;
+  background-position: center;
+}
+.deviceRowIcon[type="netiodevice"],
+.deviceRowIcon[type="netiohost"]
+{
+  background-image: url(images/fullrack.png);
+}
+.deviceRowIcon[type="netioswitch"]
+{
+  background-image: url(images/switch.png);
+}
+.deviceRowIcon[type="netiohost"][update="true"]
+{
+  background-image: url(images/fullrack-update.png);
+}
+.deviceRowIcon[type="netioswitch"][update="true"]
+{
+  background-image: url(images/switch-update.png);
+}
+.deviceRowName
+{
+  display: inline-block;
+  width: 225px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.deviceRowEthernet
+{
+  width: 11px;
+  height: 11px;
+  display: inline-block;
+  margin-left: 30px;
+  align-self: center;
+  background-size: 100%;
+}
+.deviceRowEthernet.true
+{
+  background-image: url(images/Ethernet.png);
+}
+.deviceRowHost
+{
+width: 19px;
+height: 15px;
+display: inline-block;
+margin-left: 15px;
+margin-right: 15px;
+align-self: center;
+background-repeat: no-repeat;
+background-position: center center;
+}
+.deviceRowHost.usb
+{
+  background-image: url(images/USB.png);
+  background-size: 100% auto;
+}
+.deviceRowHost.thunderbolt
+{
+  background-image: url(images/Thunderbolt.png);
+  background-size: auto 100%;
+  
+}
+.deviceList::-webkit-scrollbar {
+    width: 10px;
+}
+.deviceList::-webkit-scrollbar-track {
+    background: rgb(43,45,48);
+    border-radius: 5px;
+}
+.deviceList::-webkit-scrollbar-thumb {
+    background: #656567;
+    border-radius: 5px;
+}
+.advanced {
+  font-family: 'Helvetica';
+  color: rgb(192, 192, 192);
+  margin: 60px;
+}
+.advanced .virtualEntity {
+  padding-bottom: 30px;
+  border-bottom: solid 1px #3d3d3e;
+}
+.advanced .virtualEntityHeader {
+  color: white;
+}
+.advanced .virtualEntityExplaination {
+  margin-top: 15px;
+  margin-bottom: 30px;
+  font-size: 12px;
+}
+#virtualEntityCheckboxContainer .virtualEntityRow {
+  margin-top: 15px;
+}
+.advanced .settings {
+  margin-top: 30px;
+}
+#numberOfDevices {
+  color: #53cfa8;
+  font-weight: lighter;
+  pointer-events: none;
+}
+</style>
+<script type="text/javascript" src="promise.min.js"></script>
+<script type="text/javascript" src="transpiledClientSide.js"></script>
+</head>
+<body>
+  <div class="mainWrapper" id="mainWrapper" loading="true">
+    <div class="leftPane">
+      <img class="motuLogo" src="images/MOTULogo.png">
+      <div class="leftTabs" value="0">
+        <div class="tab" value="0" onclick="paneSelect(event)">Thunderbolt / USB</div>
+        <div class="tab" value="1" onclick="paneSelect(event)">All Devices <span id="numberOfDevices">(0)</span></div>
+        <div class="tab" value="2" onclick="paneSelect(event)">Firmware Updater</div>
+        <!-- <div class="tab" value="3" onclick="paneSelect(event)">Resources</div> -->
+        <div class="tab" value="4" id="advancedTab" onclick="paneSelect(event)">Advanced</div>
+      </div>
+    </div>
+    <div class="rightPane noDevice" id="rightPane" tab="0">
+      <div class="overlay">
+        <div class="spinner"></div>
+        <div class="spinnerText" id="spinnerText"></div>
+      </div>
+      <div class="tabView" tab="0">
+        <div class="noDeviceConnectedMessage"></div>
+        <div id="connectedDevice">
+          <div id="connectedDeviceName">-</div>
+          <div class="btn launchCtrlApp" onclick="launchCtrlAppLocal()"></div>
+          <div id="deviceConnectedBy"></div>
+          <div class="infoRow">
+            <div class="driverInfoRow">
+              <span id="driverVersionLabel">Installed Driver Version:</span>
+              <span id="driverVersion">1.0.0.0</span>
+            </div>
+            <div class="driverInfoRow update">
+              <span id="driverUpdateVersionLabel">Driver Update Available:</span>
+              <span id="driverUpdateVersion">2.0.0.0</span>
+            </div>
+          </div>
+          <div class="infoRow firmware">
+            <div class="firmwareInfoRow">
+              <span id="firmwareVersionLabel">Current Firmware Version:</span>
+              <span id="firmwareVersion">1.2.3.4</span>
+              <span id="firmwareUpdateAvailable" onclick="launchCtrlAppLocal()">Firmware Update Available</span>
+            </div>
+            <div class="firmwareInfoRow rightAlign">
+              <span id="firmwareUpdateVersionLabel">Version:</span>
+              <span id="firmwareUpdateVersion">1.2.3.5</span>
+            </div>
+          </div>
+          <div id="connectedDeviceImage"></div>
+        </div>
+        <div id="multipleDevices">
+          <div id="nextDeviceName">Next device name</div>
+          <div class="next" onclick="nextDevice()"></div>
+        </div>
+      </div>
+      <div class="tabView" tab="1">
+        <div class="devices">
+          <div class="devicesDescription">Devices detected on the network</div>
+          <div class="hideSwitches">
+            <div class="hideSwitchesLabel">Hide Switches</div>
+            <div class="checkbox" id="hideSwitchesCheckbox" value="0" onclick="hideSwitches(event)"></div>
+          </div>
+          <div class="searchFilter">
+            <div class="search"><input type="text" placeholder="Search Devices" id="deviceSearch"></div>
+            <!-- <div class="filterContainer">
+              <span class="filterLabel">Filter By:</span>
+              <span class="filter">All</span>
+              <span class="filter">AVB</span>
+              <span class="filter">Ethernet</span>
+            </div> -->
+          </div>
+          <div class="deviceList" id="deviceList"></div>
+        </div>
+      </div>
+      <div class="tabView" tab="2">
+        <iframe scrolling="no" id="fwUpdaterIFrame" src="fw_updater.html"></iframe>
+      </div>
+      <div class="tabView" tab="3">
+        <!-- <iframe src="http://jt.motu.com/resources?product_id=326"></iframe> -->
+      </div>
+      <div class="tabView" tab="4">
+        <div class="advanced">
+          <!--[if !IE]-->
+          <div class="virtualEntity" id="virtualEntity">
+            <div class="virtualEntityHeader">Virtual Audio Entity</div>
+            <div class="virtualEntityExplaination">
+            The Virtual Audio Entity is a feature built into Apple's OSX operating system. 
+            Enabling the Virtual Audio Entity on a network interface enables AVB audio streaming directly to and from your computer. 
+            Any network interfaces that support AVB are listed below. Once enabled, streams can be connected and configured through the Pro Audio Control web app.
+            </div>
+            <div id="virtualEntityCheckboxContainer"></div>
+          </div>
+          <!--[endif]-->
+          <div class="settings">
+            <div class="checkbox" id="showInMenuBar" value="0" onclick="showInMenuBar(event)"></div><div class="checkboxLabel">Show MOTU Discovery in the menu bar</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>Label</key>
+	<string>com.motu.ProAudioHTTPServer</string>
+	<key>Program</key>
+	<string>/Library/Application Support/MOTU/ProAudio/MOTUProAudioHTTPServer.app/Contents/MacOS/MOTUProAudioHTTPServer</string>
+	<key>EnableTransactions</key>
+	<true/>
+	<key>KeepAlive</key>
+	<true/>
+</dict>
+</plist>

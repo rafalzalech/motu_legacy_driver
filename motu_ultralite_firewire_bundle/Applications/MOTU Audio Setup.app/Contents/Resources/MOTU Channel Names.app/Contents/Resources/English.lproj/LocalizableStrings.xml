@@ -1,0 +1,746 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<resource_list>
+  <XSET name="LocalizedStrings">
+
+<!-- Channel Namer Awesome -->
+<TEXT name="CNAppName"							>MOTU Channel Names</TEXT>  
+<TEXT name="CNDeviceLabel"						>DEVICES</TEXT>
+<TEXT name="CNInputLabel"						>INPUTS</TEXT>
+<TEXT name="CNOutputLabel"						>OUTPUTS</TEXT>
+<TEXT name="CNNoDevices"						>No devices found. Please make sure your hardware is powered on and connected to the computer.</TEXT>
+    
+<!-- Menu Items /////////////////////////////////////////////////////////// -->
+
+<!-- File Menu -->
+<TEXT name="File"                                >File</TEXT>
+<TEXT name="SaveHardwarePresetMenu"              >Save Hardware Preset...</TEXT>
+<TEXT name="LoadHardwarePresetMenu"              >Load Hardware Preset...</TEXT>
+<TEXT name="SaveToFile"                          >Save To File...</TEXT>
+<TEXT name="LoadFromFile"                        >Load From File...</TEXT>
+<TEXT name="Edit Channel Names..."               >Edit Channel Names...</TEXT>
+<TEXT name="Peak Hold Time"                      >Peak Hold Time</TEXT>
+<TEXT name="Mix 1 Return Includes Computer Output">Mix 1 Return Includes Computer Output</TEXT>
+<TEXT name="Show Meter in Dock Icon"             >Show Meter in Dock Icon</TEXT>
+<TEXT name="HardwareFollowsConsole"              >Hardware Follows Console Stereo Settings</TEXT>
+<TEXT name="Close"                               >Close</TEXT>
+
+<!-- Load/Save Hardware Preset Popup Windows -->
+<TEXT name="LoadHardwarePreset"                  >Load Hardware Preset</TEXT>
+<TEXT name="LoadPreset"                          >Load Preset</TEXT>
+<TEXT name="SaveHardwarePreset"                  >Save Hardware Preset</TEXT>
+<TEXT name="NoConsolePresetText1"                >This preset will be loaded when hardware is first powered on.</TEXT>
+<TEXT name="PresetName"                          >Preset Name</TEXT>
+<TEXT name="PresetNameTooLongError"              >(can not be more than 12 characters)</TEXT>
+<TEXT name="OverwritePreset"                     >Overwrite Preset</TEXT>
+<TEXT name="Preset"                              >Preset</TEXT>
+
+<!-- Peak Hold Time Menu -->
+<TEXT name="Off"                                 >Off</TEXT>
+<TEXT name="2 Seconds"                           >2 Seconds</TEXT>
+<TEXT name="4 Seconds"                           >4 Seconds</TEXT>
+<TEXT name="10 Seconds"                          >10 Seconds</TEXT>
+<TEXT name="1 Minute"                            >1 Minute</TEXT>
+<TEXT name="5 Minutes"                           >5 Minutes</TEXT>
+<TEXT name="Infinite"                            >Infinite</TEXT>
+
+<!-- Edit Menu -->
+<TEXT name="Edit"                                >Edit</TEXT>
+<TEXT name="Undo"                                >Undo</TEXT>
+<TEXT name="Redo"                                >Redo</TEXT>
+<TEXT name="Copy"                                >Copy</TEXT>
+<TEXT name="Paste"                               >Paste</TEXT>
+<TEXT name="ClearPeaks"                          >Clear Peaks</TEXT>
+
+<!-- Devices Menu -->
+<TEXT name="Devices"                             >Devices</TEXT>
+
+<!-- Configurations Menu -->
+<TEXT name="Configurations"                      >Configurations</TEXT>
+<TEXT name="CreateNew"                           >Create New...</TEXT>
+<TEXT name="Save"                                >Save</TEXT>
+<TEXT name="SaveTo"                              >Save To...</TEXT>
+<TEXT name="Delete"                              >Delete...</TEXT>
+<TEXT name="Import"                              >Import...</TEXT>
+<TEXT name="Export"                              >Export...</TEXT>
+<TEXT name="FactoryDefaults"                     >Factory Defaults</TEXT>
+
+<!-- Config Manager Popup Windows -->
+<TEXT name="CreateConfiguration"                 >Create configuration</TEXT>
+<TEXT name="ConfigurationName"                   >Configuration name:</TEXT>
+<TEXT name="DeleteConfiguration"                 >Delete configuration</TEXT>
+<TEXT name="DeleteThisConfiguration"             >Delete this configuration:</TEXT>
+<TEXT name="SaveToConfiguration"                 >Save to configuration</TEXT>
+<TEXT name="SaveToThisConfiguration"             >Save to this configuration:</TEXT>
+<TEXT name="SelectAConfiguration"                >Select a configuration</TEXT>
+<TEXT name="NoConfigurationsFound"               >No configurations found</TEXT>
+<TEXT name="ok"                                  >ok</TEXT>
+<TEXT name="cancel"                              >cancel</TEXT>
+
+<!-- Talkback Menu -->
+<TEXT name="Talkback"                            >Talkback</TEXT>
+<TEXT name="ConfigureTalkbackListenback"         >Configure Talkback/Listenback...</TEXT>
+<TEXT name="Toggle Talkback"                     >Toggle Talkback</TEXT>
+<TEXT name="Toggle Listenback"                   >Toggle Listenback</TEXT>
+<TEXT name="Talk"                                >Talk</TEXT>
+<TEXT name="Listen"                              >Listen</TEXT>
+<TEXT name="Done"                                >Done</TEXT>
+
+<!-- Phones Menu -->
+<TEXT name="Phones"                              >Phones</TEXT>
+<TEXT name="Follow Active Mix"                   >Follow Active Mix</TEXT>
+
+<!-- Control Surfaces Menu -->
+<TEXT name="Control Surfaces"                    >Control Surfaces</TEXT>
+<TEXT name="Application Follows Control Surface" >Application Follows Control Surface</TEXT>
+<TEXT name="Share Surfaces with Other Applications">Share Surfaces with Other Applications</TEXT>
+<TEXT name="Enabled"                             >Enabled</TEXT>
+<TEXT name="Configure..."                        >Configure...</TEXT>
+
+<!-- Undo Names /////////////////////////////////////////////////////////// -->
+
+<!-- Input Undo Names -->
+<TEXT name="Adjust Trim"                         >Adjust Trim</TEXT>
+<TEXT name="Set Pad"                             >Set Pad</TEXT>
+<TEXT name="Set Boost"                           >Set Boost</TEXT>
+<TEXT name="Set Input Level"                     >Set Input Level</TEXT>
+<TEXT name="Set Phase"                           >Set Phase</TEXT>
+<TEXT name="Edit Channel Name"                   >Edit Channel Name</TEXT>
+<TEXT name="Set Stereo Pair"                     >Set Stereo Pair</TEXT>
+<TEXT name="Set Stereo Swap"                     >Set Stereo Swap</TEXT>
+<TEXT name="Set Stereo Mode"                     >Set Stereo Mode</TEXT>
+<TEXT name="Set Stereo Width"                    >Set Stereo Width</TEXT>
+<TEXT name="Set Limit"                           >Set Limit</TEXT>
+<TEXT name="Set Lookahead"                       >Set Lookahead</TEXT>
+<TEXT name="Set Soft Clip"                       >Set Soft Clip</TEXT>
+<TEXT name="Set Phantom"                         >Set Phantom</TEXT>
+<TEXT name="Adjust Instrument Trim"              >Adjust Instrument Trim</TEXT>
+
+<!-- Bus Input Undo Names -->
+<TEXT name="Set Solo"                            >Set Solo</TEXT>
+<TEXT name="Set Mute"                            >Set Mute</TEXT>
+<TEXT name="Adjust Pan"                          >Adjust Pan</TEXT>
+<TEXT name="Move Fader"                          >Move Fader</TEXT>
+<TEXT name="Set Balance/Width Preference"        >Set Balance/Width Preference</TEXT>
+
+<!-- Bus Undo Items -->
+<TEXT name="Set Bus Assign"                      >Set Bus Assign</TEXT>
+<TEXT name="Set Bus Mute"                        >Set Bus Mute</TEXT>
+<TEXT name="Move Bus Fader"                      >Move Bus Fader</TEXT>
+<TEXT name="Edit Bus Name"                       >Edit Bus Name</TEXT>
+
+<!-- Output Undo Names -->
+<TEXT name="Edit Output Name"                    >Edit Output Name</TEXT>
+<TEXT name="Set Output Bus Assign"               >Set Output Bus Assign</TEXT>
+<TEXT name="Adjust Output Fader"                 >Adjust Output Fader</TEXT>
+
+<!-- Host Input Names -->
+<TEXT name="Set Host Input Assignment"           >Set Host Input Assignment</TEXT>
+
+<!-- Device Undo Names -->
+<TEXT name="Set Input Pre/Post"                  >Set Input Pre/Post</TEXT>
+<TEXT name="Set Monitor Level"                   >Set Monitor Level</TEXT>
+<TEXT name="Set Scope Input"                     >Set Scope Input</TEXT>
+<TEXT name="Set Sine Frequency"                  >Set Sine Frequency</TEXT>
+<TEXT name="Set Sine Amplitude"                  >Set Sine Amplitude</TEXT>
+<TEXT name="Set White Noise Amplitude"           >Set White Noise Amplitude</TEXT>
+<TEXT name="Set Pink Noise Amplitude"            >Set Pink Noise Amplitude</TEXT>
+<TEXT name="Set Talkback Input"                  >Set Talkback Input</TEXT>
+<TEXT name="Set Listenback Input"                >Set Listenback Input</TEXT>
+<TEXT name="Set Talkback Att. Level"             >Set Talkback Att. Level</TEXT>
+<TEXT name="Set Listenback Att. Level"           >Set Listenback Att. Level</TEXT>
+<TEXT name="Set Talkback Width"                  >Set Talkback Width</TEXT>
+	
+<!-- EQ Undo Names -->
+<TEXT name="Set EQ Enable"                       >Set EQ Enable</TEXT>
+
+<!-- EQ Band Undo Names -->
+<TEXT name="Set EQ Frequency"                    >Set EQ Frequency</TEXT>
+<TEXT name="Set EQ Gain"                         >Set EQ Gain</TEXT>
+<TEXT name="Set EQ Q"                            >Set EQ Q</TEXT>
+<TEXT name="Set EQ Band Enable"                  >Set EQ Band Enable</TEXT>
+<TEXT name="Set EQ Type"                         >Set EQ Type</TEXT>
+
+<!-- Dynamics Undo Names -->
+<TEXT name="Set Dynamics Enable"                 >Set Dynamics Enable</TEXT>
+
+<!-- Compressor Undo Names -->
+<TEXT name="Set Compressor Enable"               >Set Compressor Enable</TEXT>
+<TEXT name="Set Compressor Threshold"            >Set Compressor Threshold</TEXT>
+<TEXT name="Set Compressor Ratio"                >Set Compressor Ratio</TEXT>
+<TEXT name="Set Compressor Attack"               >Set Compressor Attack</TEXT>
+<TEXT name="Set Compressor Release"              >Set Compressor Release</TEXT>
+<TEXT name="Set Compressor Trim"                 >Set Compressor Trim</TEXT>
+<TEXT name="Set Compressor Knee"                 >Set Compressor Knee</TEXT>
+<TEXT name="Set Compressor Detector Mode"        >Set Compressor Detector Mode</TEXT>
+
+<!-- Leveler Undo Names -->
+<TEXT name="Set Leveler Enable"                  >Set Leveler Enable</TEXT>
+<TEXT name="Set Leveler Mode"                    >Set Leveler Mode</TEXT>
+<TEXT name="Set Leveler Gain Reduction"          >Set Leveler Gain Reduction</TEXT>
+<TEXT name="Set Leveler Makeup Gain"             >Set Leveler Makeup Gain</TEXT>
+
+<!-- Reverb Send / Return Undo Names -->
+<TEXT name="Set Reverb Send"                     >Set Reverb Send</TEXT>
+<TEXT name="Set Reverb Return"                   >Set Reverb Return</TEXT>
+<TEXT name="Set Reverb Send Pan"                 >Set Reverb Send Pan</TEXT>
+	
+<!-- Master Page Undo Names -->
+<TEXT name="Set Monitor Enable"                  >Set Monitor Enable</TEXT>
+<TEXT name="Enable Talkback Output"              >Enable Talkback Output</TEXT>
+<TEXT name="Enable Listenback Output"            >Enable Listenback Output</TEXT>
+
+<!-- Reverb Algo Undo Names -->
+<TEXT name="Set Reverb Enable"                   >Set Reverb Enable</TEXT>
+<TEXT name="Set Reverb Split Point"              >Set Reverb Split Point</TEXT>
+<TEXT name="Set Reverb Time"                     >Set Reverb Time</TEXT>
+<TEXT name="Set Reverb Pre-Delay"                >Set Reverb Pre-Delay</TEXT>
+<TEXT name="Set Reverb Cut Frequency"            >Set Reverb Cut Frequency</TEXT>
+<TEXT name="Set Reverb Cut Level"                >Set Reverb Cut Level</TEXT>
+<TEXT name="Set Reverb Reflections Size"         >Set Reverb Reflections Size</TEXT>
+<TEXT name="Set Reverb Reflections Set"          >Set Reverb Reflections Set</TEXT>
+<TEXT name="Set Reverb Reflections Level"        >Set Reverb Reflections Level</TEXT>
+<TEXT name="Set Reverb Time"                     >Set Reverb Time</TEXT>
+<TEXT name="Set Reverb Frequency"                >Set Reverb Frequency</TEXT>
+<TEXT name="Set Reverb Width"                    >Set Reverb Width</TEXT>
+
+<!-- Other Undo Names -->
+<TEXT name="Paste Mix Bus"                       >Paste Mix Bus</TEXT>
+<TEXT name="LoadConfiguration"                   >Load Configuration</TEXT>
+
+<!-- Widget Names ///////////////////////////////////////////////////////// -->
+
+<!-- Initial Registration Dialog -->
+<TEXT name="Registration"                        >Registration</TEXT>
+<TEXT name="YourMicroBookSerialNumberIs"         >Your MicroBook serial number is:</TEXT>
+<TEXT name="RegistrationTextLine1"               >Your MicroBook's serial number is stored in its flash memory. It can</TEXT>
+<TEXT name="RegistrationTextLine2"               >be viewed at any time by opening the MicroBook Setup window from </TEXT>
+<TEXT name="RegistrationTextLine3"               >the Devices menu. Use it to register your MicroBook at </TEXT>
+<TEXT name="RegistrationTextLine4"               >www.motu.com/registration to be eligible for technical support </TEXT>
+<TEXT name="RegistrationTextLine5"               >and software updates.</TEXT>
+<TEXT name="RegistrationTextLine6"               ></TEXT>
+
+<!-- Communication Error Dialog -->
+<TEXT name="CommunicationError"                  >Communication Error</TEXT>
+<TEXT name="CommError1"                          >This version of CueMix FX is compatible with MicroBook firmware</TEXT>
+<TEXT name="CommError2"                          >version </TEXT>
+<TEXT name="CommError3"                          >Your MicroBook has firmware version </TEXT>
+<TEXT name="CommError4"                          >Please download and install the latest MicroBook software from </TEXT>
+<TEXT name="CommError5"                          >www.motu.com/download, and then open CueMix FX again.</TEXT>
+
+<!-- Load Configuration Dialog -->
+<TEXT name="LoadConfiguration"                   >Load Configuration</TEXT>
+<TEXT name="LoadThisConfiguration"               >Please choose a configuration to load:</TEXT>
+
+<!-- Tab Strings -->
+<TEXT name="INPUTS"                              >INPUTS</TEXT>
+<TEXT name="MIXES"                               >MIXES</TEXT>
+<TEXT name="OUTPUTS"                             >OUTPUTS</TEXT>
+<TEXT name="CHANNELTAB"                          >CHANNEL</TEXT>
+<TEXT name="EQTAB"                               >EQ</TEXT>
+<TEXT name="DYNAMICSTAB"                         >DYNAMICS</TEXT>
+<TEXT name="METERTAB"                            >METERS</TEXT>
+<TEXT name="REVERBTAB"                           >REVERB</TEXT>
+<TEXT name="SIGGEN"                              >SIG GEN</TEXT>
+
+<!-- Inputs Page -->
+<TEXT name="FOCUS"                               >FOCUS</TEXT>
+<TEXT name="MONO"                                >MONO</TEXT>
+<TEXT name="STEREO"                              >STEREO</TEXT>
+<TEXT name="PHASE"                               >PHASE</TEXT>
+<TEXT name="PHASEL"                              >L -</TEXT>
+<TEXT name="PHASER"                              >- R</TEXT>
+<TEXT name="TRIM"                                >TRIM</TEXT>
+<TEXT name="DB"                                  >dB</TEXT>
+<TEXT name="+"                                   >+</TEXT>
+<TEXT name="-"                                   >-</TEXT>
+<TEXT name="F"                                   >ƒ</TEXT>
+<TEXT name="Q"                                   >Q</TEXT>
+<TEXT name="HPF"                                 >HPF</TEXT>
+<TEXT name="LPF"                                 >LPF</TEXT>
+<TEXT name="T"                                   >T</TEXT>
+<TEXT name="R"                                   >R</TEXT>
+<TEXT name="EQ"                                  >EQ</TEXT>
+<TEXT name="DYNAMICS"                            >DYNAMICS</TEXT>
+<TEXT name="REVERB"                              >REVERB</TEXT>
+
+<!-- Legacy Inputs -->
+<TEXT name="BOOST"                               >BOOST</TEXT>
+
+<!-- Mixes Page -->
+<TEXT name="BALANCE"                             >BAL</TEXT>
+<TEXT name="WIDTH"                               >WIDTH</TEXT>
+<TEXT name="PAN"                                 >PAN</TEXT>
+<TEXT name="SOLO"                                >SOLO</TEXT>
+<TEXT name="MUTE"                                >MUTE</TEXT>
+<TEXT name="Mix"                                 >Mix</TEXT>
+<TEXT name="Main"                                >Main</TEXT>
+<TEXT name="ToHost"                              >To Host</TEXT>
+<TEXT name="SEND"                                >SEND</TEXT>
+<TEXT name="RTN"                                 >RTN</TEXT>
+
+<!-- Legacy Outputs -->
+<TEXT name="OUTPUT"                              >OUTPUT</TEXT>
+
+<!-- Outputs Page -->
+<TEXT name="SOURCE:"                             >SOURCE:</TEXT>
+<TEXT name="VERB SND" platform="MacX"            >VERB SND</TEXT>
+<TEXT name="VERB RTN" platform="MacX"            >VERB RTN</TEXT>
+<TEXT name="VERB SND" platform="Wind"            >VRB SND</TEXT>
+<TEXT name="VERB RTN" platform="Wind"            >VRB RTN</TEXT>
+<TEXT name="TALK"                                >TALK</TEXT>
+<TEXT name="LISTEN"                              >LISTEN</TEXT>
+<TEXT name="MONITOR"                             >MONITOR</TEXT>
+
+<!-- Outputs Assign Menu -->
+<TEXT name="Muted"                               >Muted</TEXT>
+<TEXT name="MicIn"                               >Mic In</TEXT>
+<TEXT name="GuitarIn"                            >Guitar In</TEXT>
+<TEXT name="LineIn"                              >Line In</TEXT>
+<TEXT name="FromHost"                            >From Host</TEXT>
+<TEXT name="Sine"                                >Sine</TEXT>
+<TEXT name="White"                               >White</TEXT>
+<TEXT name="Pink"                                >Pink</TEXT>
+
+<!-- Channel Page -->
+<TEXT name="Input"                               >Input</TEXT>
+<TEXT name="Inputs"                              >Inputs</TEXT>
+<TEXT name="Output"                              >Output</TEXT>
+<TEXT name="Outputs"                             >Outputs</TEXT>
+<TEXT name="PadAndReferenceLevel"                >PAD AND REFERENCE LEVEL</TEXT>
+<TEXT name="PadAndPhantom"                       >PAD AND PHANTOM</TEXT>
+<TEXT name="PAD"                                 >PAD</TEXT>
+<TEXT name="PHANTOM"                             >PHANTOM</TEXT>
+<TEXT name="Minus10"                             >-10 dBV</TEXT>
+<TEXT name="Plus4"                               >+4 dBu</TEXT>
+<TEXT name="MODE"                                >MODE</TEXT>
+<TEXT name="NORMAL"                              >NORMAL</TEXT>
+<TEXT name="MS"                                  >M/S</TEXT>
+<TEXT name="SWAP"                                >SWAP L/R</TEXT>
+<TEXT name="OVERLOAD"                            >OVERLOAD PROTECTION</TEXT>
+<TEXT name="VLIMIT"                              >VLIMIT</TEXT>
+<TEXT name="SOFTCLIP"                            >SOFT CLIP</TEXT>
+<TEXT name="LOOKAHEAD"                           >LOOKAHEAD</TEXT>
+<TEXT name="TALKBACK"                            >TALKBACK</TEXT>
+<TEXT name="SEND"                                >SEND</TEXT>
+
+<!-- EQ Page -->
+<TEXT name="ShowNoAnalysis"                      >Show No Analysis</TEXT>
+<TEXT name="ShowFFT"                             >Show FFT</TEXT>
+<TEXT name="ShowSpectrogram"                     >Show Spectrogram</TEXT>
+<TEXT name="ShowSpectrumAnalysis"                >Show Spectrum Analysis</TEXT>
+<TEXT name="ShowOscilloscope"                    >Show Oscilloscope</TEXT>
+<TEXT name="ShowFullWindowAnalysis"              >Show Full Window Analysis</TEXT>
+<TEXT name="HideFullWindowAnalysis"              >Hide Full Window Analysis</TEXT>
+<TEXT name="ShowBandResponse"                    >Show Band Response</TEXT>
+<TEXT name="ShowInfoBox"                         >Show Info Box</TEXT>
+<TEXT name="ShowXAxisLinearScale"                >Show X-Axis Linear Scale</TEXT>
+<TEXT name="ShowEQControls"                      >Show EQ Controls</TEXT>
+<TEXT name="Spectrogram"                         >Spectrogram</TEXT>
+<TEXT name="Alpha"                               >Alpha</TEXT>
+<TEXT name="FFTAnalysis"                         >FFT Analysis</TEXT>
+<TEXT name="FREQ"                                >FREQ</TEXT>
+<TEXT name="GAIN"                                >GAIN</TEXT>
+
+<!-- Dynamics Page -->
+<TEXT name="IN"                                  >IN</TEXT>
+<TEXT name="OUT"                                 >OUT</TEXT>
+<TEXT name="GR"                                  >GR</TEXT>
+<TEXT name="COMPRESSOR"                          >COMPRESSOR</TEXT>
+<TEXT name="THRESHOLD"                           >THRESHOLD</TEXT>
+<TEXT name="RATIO"                               >RATIO</TEXT>
+<TEXT name="ATTACK"                              >ATTACK</TEXT>
+<TEXT name="RELEASE"                             >RELEASE</TEXT>
+<TEXT name="KNEE"                                >KNEE</TEXT>
+<TEXT name="PEAK"                                >PEAK</TEXT>
+<TEXT name="RMS"                                 >RMS</TEXT>
+<TEXT name="LEVELER"                             >LEVELER</TEXT>
+<TEXT name="LIMIT"                               >LIMIT</TEXT>
+<TEXT name="COMP"                                >COMP</TEXT>
+<TEXT name="REDUCTION"                           >REDUCTION</TEXT>
+<TEXT name="MAKEUP"                              >MAKEUP</TEXT>
+<TEXT name="DETECTOR"                            >DETECTOR</TEXT>
+
+<!-- Meters Page -->
+<TEXT name="FX"                                  >- FX -</TEXT>
+<TEXT name="PRE"                                 >PRE</TEXT>
+<TEXT name="POST"                                >POST</TEXT>
+<TEXT name="MIC"                                 >MIC</TEXT>
+<TEXT name="GUITAR"                              >GUITAR</TEXT>
+<TEXT name="ANALOG"                              >ANALOG</TEXT>
+<TEXT name="SPDIF"                               >S/PDIF</TEXT>
+<TEXT name="OPTICALA"                            >OPTICAL A</TEXT>
+<TEXT name="OPTICALB"                            >OPTICAL B</TEXT>
+<TEXT name="FROM HOST"                           >FROM HOST</TEXT>
+<TEXT name="MIX"                                 >MIX</TEXT>
+<TEXT name="MAIN"                                >MAIN</TEXT>
+<TEXT name="LINE"                                >LINE</TEXT>
+<TEXT name="PHONES" platform="MacX"              >PHONES</TEXT>
+<TEXT name="PHONES" platform="Wind"              >PHNS</TEXT>
+<TEXT name="AES"                                 >AES</TEXT>
+<TEXT name="PHN"                                 >PHN</TEXT>
+<TEXT name="AES SPDIF PHNS"                      >AES SPDIF PHNS</TEXT>
+
+<!-- Reverb Page -->
+<TEXT name="PRIMARY CONTROLS"                    >PRIMARY CONTROLS</TEXT>
+<TEXT name="TIME"                                >TIME</TEXT>
+<TEXT name="PRE-DELAY"                           >PRE-DELAY</TEXT>
+<TEXT name="SHELF FILTER"                        >SHELF FILTER</TEXT>
+<TEXT name="SHELF"                               >SHELF</TEXT>
+<TEXT name="CUT"                                 >CUT</TEXT>
+<TEXT name="EARLY REFLECTIONS"                   >EARLY REFLECTIONS</TEXT>
+<TEXT name="REFLECTIONS"                         >REFLECTIONS</TEXT>
+<TEXT name="SIZE"                                >SIZE</TEXT>
+<TEXT name="LEVEL"                               >LEVEL</TEXT>
+<TEXT name="REVERB DESIGN"                       >REVERB DESIGN</TEXT>
+<TEXT name="REVERB TIME"                         >REVERB TIME</TEXT>
+<TEXT name="CROSSOVER"                           >CROSSOVER</TEXT>
+<TEXT name="LOW"                                 >LOW</TEXT>
+<TEXT name="MID"                                 >MID</TEXT>
+<TEXT name="HIGH"                                >HIGH</TEXT>
+<TEXT name="SWAPPED"                             >SWAPPED</TEXT>
+<TEXT name="SPLIT POINT"                         >SPLIT POINT</TEXT>
+
+<!-- Reflections Menu -->
+<TEXT name="ROOM A"                              >ROOM A</TEXT>
+<TEXT name="ROOM B"                              >ROOM B</TEXT>
+<TEXT name="ROOM C"                              >ROOM C</TEXT>
+<TEXT name="ROOM D"                              >ROOM D</TEXT>
+<TEXT name="ROOM E"                              >ROOM E</TEXT>
+
+<!-- Signal Generator Page -->
+<TEXT name="SINE"                                >SINE</TEXT>
+<TEXT name="Frequency"                           >Frequency</TEXT>
+<TEXT name="Amplitude"                           >Amplitude</TEXT>
+<TEXT name="NOISE"                               >NOISE</TEXT>
+<TEXT name="White Amp"                           >White Amp</TEXT>
+<TEXT name="Pink Amp"                            >Pink Amp</TEXT>
+
+<!-- FFT Analysis -->
+<TEXT name="In"                                  >In</TEXT>
+<TEXT name="ScopeAudioNotAvailable"              >Scope Audio not available in this hardware configuration.</TEXT>
+
+<!-- Oscilloscope -->
+<TEXT name="Oscilloscope"                        >Oscilloscope</TEXT>
+<TEXT name="View"                                >View</TEXT>
+<TEXT name="Left"                                >Left</TEXT>
+<TEXT name="Right"                               >Right</TEXT>
+<TEXT name="Channel Name"                        >Channel Name</TEXT>
+<TEXT name="SplitScreen"                         >Split Screen</TEXT>
+<TEXT name="Shared"                              >Shared</TEXT>
+<TEXT name="Add"                                 >Add</TEXT>
+<TEXT name="Subtract"                            >Subtract L - R</TEXT>
+<TEXT name="ShowRuler"                           >Show Ruler</TEXT>
+<TEXT name="Axes"                                >Axes</TEXT>
+<TEXT name="Horizontal"                          >Horizontal</TEXT>
+<TEXT name="Vertical"                            >Vertical</TEXT>
+<TEXT name="ZoomOffset"                          >Zoom / Offset</TEXT>
+<TEXT name="MinMax"                              >Min / Max</TEXT>
+<TEXT name="Zoom"                                >Zoom</TEXT>
+<TEXT name="Pos"                                 >Pos</TEXT>
+<TEXT name="Min"                                 >Min</TEXT>
+<TEXT name="Max"                                 >Max</TEXT>
+<TEXT name="TimeUnits"                           >Time Units</TEXT>
+<TEXT name="Seconds"                             >Seconds</TEXT>
+<TEXT name="Samples"                             >Samples</TEXT>
+<TEXT name="samples"                             >samples</TEXT>
+<TEXT name="Sweeps"                              >Sweeps</TEXT>
+<TEXT name="WaveformRecognition"                 >Waveform Recognition</TEXT>
+<TEXT name="Type1"                               >Type I</TEXT>
+<TEXT name="Type2"                               >Type II</TEXT>
+<TEXT name="Trigger"                             >Trigger</TEXT>
+<TEXT name="Auto"                                >Auto</TEXT>
+<TEXT name="Normal"                              >Normal</TEXT>
+<TEXT name="SingleSweep"                         >Single Sweep</TEXT>
+<TEXT name="Neg"                                 >Neg</TEXT>
+<TEXT name="Magnitude"                           >Magnitude</TEXT>
+<TEXT name="Level"                               >Level</TEXT>
+<TEXT name="Holdoff"                             >Holdoff</TEXT>
+<TEXT name="s"                                   >s</TEXT>
+<TEXT name="ms"                                  >ms</TEXT>
+<TEXT name="us"                                  >µs</TEXT>
+<TEXT name="ns"                                  >ns</TEXT>
+<TEXT name="leftArrow"                           >‹‹</TEXT>
+<TEXT name="rightArrow"                          >››</TEXT>
+<TEXT name="delta="                              >∆=</TEXT>
+
+<!-- XY Plot -->
+<TEXT name="XYPlot"                              >X-Y Plot</TEXT>
+<TEXT name="X"                                   >X</TEXT>
+<TEXT name="Y"                                   >Y</TEXT>
+<TEXT name="Line"                                >Line</TEXT>
+<TEXT name="Scatter"                             >Scatter</TEXT>
+<TEXT name="Grayscale"                           >Grayscale</TEXT>
+<TEXT name="Color"                               >Color</TEXT>
+<TEXT name="Persistence"                         >Persistence</TEXT>
+<TEXT name="Length"                              >Length</TEXT>
+<TEXT name="Decay"                               >Decay</TEXT>
+<TEXT name="Warp"                                >Warp</TEXT>
+
+<!-- Phase Analysis -->
+<TEXT name="PhaseAnalysis"                       >Phase Analysis</TEXT>
+<TEXT name="A"                                   >A</TEXT>
+<TEXT name="B"                                   >B</TEXT>
+<TEXT name="Logarithmic"                         >Logarithmic</TEXT>
+<TEXT name="Linear"                              >Linear</TEXT>
+<TEXT name="Rectangular"                         >Rectangular</TEXT>
+<TEXT name="Polar"                               >Polar</TEXT>
+<TEXT name="Filters"                             >Filters</TEXT>
+<TEXT name="Floor"                               >Floor</TEXT>
+<TEXT name="MaxDeltaTheta"                       >Max ∆θ</TEXT>
+<TEXT name="pi"                                  >π</TEXT>
+
+<!-- Tuner -->
+<TEXT name="Tuner"                               >Tuner</TEXT>
+<TEXT name="Hz"                                  >Hz</TEXT>
+<TEXT name="cents"                               >cents</TEXT>
+<TEXT name="-50"                                 >-50</TEXT>
+<TEXT name="-25"                                 >-25</TEXT>
+<TEXT name="+25"                                 >+25</TEXT>
+<TEXT name="+50"                                 >+50</TEXT>
+<TEXT name="SetReferenceFrequency"               >Set reference frequency using horizontal fader.</TEXT>
+<!--
+<TEXT name="TunerFreqBlank"                      >‒‒‒‒.‒‒</TEXT>
+<TEXT name="TunerCentsBlank"                     >‒‒.‒</TEXT>
+-->
+<TEXT name="TunerFreqBlank"                      >----.--</TEXT>
+<TEXT name="TunerCentsBlank"                     >--.-</TEXT>
+
+<!-- Microbook Setup Window -->
+<TEXT name="Setup"                               >Setup</TEXT>
+<TEXT name="USBRoutingToHost"                    >USB Routing To Host</TEXT>
+<TEXT name="USBInput1"                           >Input 1</TEXT>
+<TEXT name="USBInput2"                           >Input 2</TEXT>
+<TEXT name="USBInput3"                           >Input 3</TEXT>
+<TEXT name="USBInput4"                           >Input 4</TEXT>
+<TEXT name="ScopeChannelSelection"               >Scope Channel Selection</TEXT>
+<TEXT name="Scope"                               >Scope</TEXT>
+<TEXT name="Device"                              >Device</TEXT>
+<TEXT name="LeftInput"                           >Left Input</TEXT>
+<TEXT name="RightInput"                          >Right Input</TEXT>
+<TEXT name="HostBufferMultiplier"                >Host Buffer Multiplier</TEXT>
+<TEXT name="HostBufferMultiplier1"               >1   (2ms)</TEXT>
+<TEXT name="HostBufferMultiplier2"               >2   (4ms)</TEXT>
+<TEXT name="HostBufferMultiplier4"               >4   (8ms)</TEXT>
+<TEXT name="HostBufferMultiplier8"               >8   (16ms)</TEXT>
+<TEXT name="HostBufferMultiplier14"              >14   (28ms)</TEXT>
+
+<!-- Microbook Setup Window Channel Names -->
+<TEXT name="MicIn"                               >Mic In</TEXT>
+<TEXT name="GuitarIn"                            >Guitar In</TEXT>
+<TEXT name="LineIn1"                             >Line In 1</TEXT>
+<TEXT name="LineIn2"                             >Line In 2</TEXT>
+<TEXT name="Mix1L"                               >Mix 1 Left</TEXT>
+<TEXT name="Mix1R"                               >Mix 1 Right</TEXT>
+<TEXT name="Mix2L"                               >Mix 2 Left</TEXT>
+<TEXT name="Mix2R"                               >Mix 2 Right</TEXT>
+<TEXT name="Mix3L"                               >Mix 3 Left</TEXT>
+<TEXT name="Mix3R"                               >Mix 3 Right</TEXT>
+<TEXT name="Mix4L"                               >Mix 4 Left</TEXT>
+<TEXT name="Mix4R"                               >Mix 4 Right</TEXT>
+<TEXT name="Mix5L"                               >Mix 5 Left</TEXT>
+<TEXT name="Mix5R"                               >Mix 5 Right</TEXT>
+<TEXT name="MainOut1"                            >Main Out 1</TEXT>
+<TEXT name="MainOut2"                            >Main Out 2</TEXT>
+<TEXT name="LineOut1"                            >Line Out 1</TEXT>
+<TEXT name="LineOut2"                            >Line Out 2</TEXT>
+<TEXT name="PhonesOut1"                          >Phones Out 1</TEXT>
+<TEXT name="PhonesOut2"                          >Phones Out 2</TEXT>
+<TEXT name="FocusL"                              >Focus Left</TEXT>
+<TEXT name="FocusR"                              >Focus Right</TEXT>
+
+<TEXT name="PreEffects"                          >Pre-Effects</TEXT>
+<TEXT name="PostEQ"                              >Post-EQ</TEXT>
+<TEXT name="PostCompressor"                      >Post-Compressor</TEXT>
+
+<TEXT name="Firmware:"                           >Firmware:</TEXT>
+<TEXT name="Serial:"                             >Serial:</TEXT>
+<TEXT name="Driver:"                             >Driver:</TEXT>
+
+<!-- LCD Glare Overlay -->
+<TEXT name="NotEnoughDSPResources"               >NOT ENOUGH DSP RESOURCES</TEXT>
+<TEXT name="ToEnableThisEffect"                  >TO ENABLE THIS EFFECT</TEXT>
+<TEXT name="PleaseDisableOtherChannel"           >please disable other channel</TEXT>
+<TEXT name="EffectsOrDisableOptical"             >effects or disable optical</TEXT>
+<TEXT name="BanksToFreeUpResources"              >banks to free up resources</TEXT>
+<TEXT name="EffectsToFreeUpResources"            >effects to free up resources</TEXT>
+<TEXT name="ReverbNotAvailable"                  >REVERB NOT AVAILABLE</TEXT>
+<TEXT name="At2xSampleRates"                     >AT 2x SAMPLE RATES</TEXT>
+<TEXT name="EffectsNotAvailable"                 >EFFECTS NOT AVAILABLE</TEXT>
+<TEXT name="At4xSampleRates"                     >AT 4x SAMPLE RATES</TEXT>
+<TEXT name="ReverbOnlyAvailable"                 >REVERB ONLY AVAILABLE</TEXT>
+<TEXT name="At1xSampleRates"                     >AT 1x SAMPLE RATES</TEXT>
+
+<!-- Legacy LCD -->
+<TEXT name="LCDTrim"                             >Trim:  adjust input signal level</TEXT>
+<TEXT name="LCDPhase"                            >Phase invert</TEXT>
+<TEXT name="LCDPad"                              >Pad:  apply 20dB attenuation to input</TEXT>
+<TEXT name="LCDBoost"                            >Boost:  apply 6dB gain to input</TEXT>
+<TEXT name="LCDInputLevel1"                      >Reference:  select -10dBV or +4dBu input</TEXT>
+<TEXT name="LCDInputLevel2"                      >reference level</TEXT>
+<TEXT name="LCDStereoness1"                      >Pairing:  mono / stereo operation for</TEXT>
+<TEXT name="LCDStereoness2"                      >adjacent inputs</TEXT>
+<TEXT name="LCDEnableHWFC1"                      >Hardware Follows Console Stereo Settings must</TEXT>
+<TEXT name="LCDEnableHWFC2"                      >be enabled to change this from the console</TEXT>
+
+<TEXT name="LCDSolo"                             >Solo:  solo channel to bus output</TEXT>
+<TEXT name="LCDMute"                             >Mute:  mute channel to bus output</TEXT>
+<TEXT name="LCDPan"                              >Pan:  pan channel across bus output</TEXT>
+<TEXT name="LCDBalance1"                         >Balance:  adjust stereo balance between</TEXT>
+<TEXT name="LCDBalance2"                         >paired channels</TEXT>
+<TEXT name="LCDWidth1"                           >Width:  adjust stereo width of</TEXT>
+<TEXT name="LCDWidth2"                           >paired channels</TEXT>
+<TEXT name="LCDFader"                            >Fader:  set channel level to bus output</TEXT>
+
+<TEXT name="LCDBusMute"                          >Bus mute:  mute bus output</TEXT>
+<TEXT name="LCDBusFader"                         >Bus master fader:  set bus output level</TEXT>
+<TEXT name="LCDBusSelect"                        >Bus select menu:  select bus to edit and view</TEXT>
+<TEXT name="LCDBusAssign1"                       >Bus assign:  choose an output for the current</TEXT>
+<TEXT name="LCDBusAssign2"                       >mix bus</TEXT>
+
+<TEXT name="LCDTalkInput"                        >Talkback input:  select an input for talkback</TEXT>
+<TEXT name="LCDListenInput"                      >Listenback input:  select an input for listenback</TEXT>
+<TEXT name="LCDTalkEnable"                       >Talkback button:  activate talkback</TEXT>
+<TEXT name="LCDTalkLink"                         >Talkback link:  link listenback to talkback</TEXT>
+<TEXT name="LCDListenEnable"                     >Listenback button:  activate listenback</TEXT>
+<TEXT name="LCDTalkAtt1"                         >Talkback dim:  set attenuation amount for when</TEXT>
+<TEXT name="LCDTalkAtt2"                         >talkback is enabled</TEXT>
+<TEXT name="LCDListenAtt1"                       >Listenback dim:  set attenuation amount for when</TEXT>
+<TEXT name="LCDListenAtt2"                       >listenback is enabled</TEXT>
+<TEXT name="LCDTalkConfigure1"                   >Output assign:  select talkback and listenback</TEXT>
+<TEXT name="LCDTalkConfigure2"                   >outputs</TEXT>
+
+<TEXT name="LCDWithShift"                        >With shift:  apply to all channels</TEXT>
+<TEXT name="LCDWithShiftInputs"                  >With shift:  apply to all inputs</TEXT>
+<TEXT name="LCDWithShiftInputs1-4"               >With shift:  apply to inputs 1-4</TEXT>
+<TEXT name="LCDWithShiftInputs5-8"               >With shift:  apply to inputs 5-8</TEXT>
+<TEXT name="LCDWithOption"     platform="MacX"   >With option:  apply to all busses</TEXT>
+<TEXT name="LCDWithOption"     platform="Wind"   >With alt:  apply to all busses</TEXT>
+<TEXT name="LCDOptionLockOn"   platform="MacX"   >With option:  latch on</TEXT>
+<TEXT name="LCDOptionLockOn"   platform="Wind"   >With alt:  latch on</TEXT>
+<TEXT name="LCDWithCmd"        platform="MacX"   >With command:  apply to stereo pair</TEXT>
+<TEXT name="LCDWithCmd"        platform="Wind"   >With control:  apply to stereo pair</TEXT>
+
+<!-- DSP Resource Monitor -->
+<TEXT name="DSP"                                 >DSP</TEXT>
+
+<!-- Monitor Section / Talkback Console -->
+<TEXT name="LINK"                                >LINK</TEXT>
+<TEXT name="TalkbackConsole"                     >Talkback Console</TEXT>
+<TEXT name="DIM"                                 >DIM</TEXT>
+
+<!-- Monitor Popup Menu -->
+<TEXT name="MainOuts"                            >Main Outs</TEXT>
+<TEXT name="Stereo"                              >Stereo</TEXT>
+<TEXT name="Quad"                                >Quad</TEXT>
+<TEXT name="Custom"                              >Custom</TEXT>
+
+<!-- Mac Console Error -->
+<TEXT name="No device explanation"               >Verify that the interface is powered on and connected to the computer.</TEXT>
+<TEXT name="No Device Error"                     >No Interface Found</TEXT>
+
+<!-- Mac Core Device -->
+<TEXT name="Not enough bandwidth on Bus."        >CueMix FX can't communicate with the audio interface because there is not enough bandwidth.  If you're using a MOTU FireWire audio interface, reduce the number of devices connected to the FireWire bus or disable the interface's optical banks.  If you're using an 828mkII USB, make sure that it is connected to a USB 2.0 bus.</TEXT>
+<TEXT name="MOTU CueMix FX"                      >MOTU CueMix FX</TEXT>
+<TEXT name="Disabled"                            >Disabled</TEXT>
+<TEXT name="Phones 1-2"                          >Phones 1-2</TEXT>
+<TEXT name="None"                                >None</TEXT>
+<TEXT name="Bus"                                 >Bus</TEXT>
+
+<!-- Win Console Error -->
+<TEXT name="ErrorTitle"                          >MOTU FireWire/USB Audio</TEXT>
+<TEXT name="DriverNoDevices"                     >No MOTU FireWire or USB audio interfaces were detected.</TEXT>
+<TEXT name="DriverNoMemory"                      >CueMix FX has ran out of memory.</TEXT>
+<TEXT name="WrongDriverVersion"                  >CueMix FX can't communicate with the audio interface driver because of a version mismatch.  Please reinstall the driver.</TEXT>
+<TEXT name="InsufficentBandwidth"                >CueMix FX can't communicate with the audio interface because there is not enough bandwidth.  If you're using a MOTU FireWire audio interface, reduce the number of devices connected to the FireWire bus or disable the interface's optical banks.  If you're using an 828mkII USB, make sure that it is connected to a USB 2.0 bus.</TEXT>
+<TEXT name="Unknown"                             >An undefined error has occurred.</TEXT>
+<TEXT name="NoDeviceFeatureError"                >This application is not compatible with the original 828 or the original 896.</TEXT>
+<TEXT name="FileError"                           >An error occured during the requested file operation.</TEXT>
+
+<!-- Win Core Device -->
+<TEXT name="NoCueMixDevices"                     >No MOTU Audio Devices that support CueMix found</TEXT>
+<TEXT name="NoSMPTEDevices"                      >No MOTU Audio Devices that support SMPTE found</TEXT>
+
+<!-- MicroBook -->
+<TEXT name="SupportedMicroBookFVMin"             >1 3 8 0</TEXT>
+<TEXT name="SupportedMicroBookFVMax"             >1 7 8 0</TEXT>
+
+<!-- Required -->
+<TEXT name="MBOK"                                >OK</TEXT>
+<TEXT name="MBCancel"                            >Cancel</TEXT>
+<TEXT name="MBYes"                               >Yes</TEXT>
+<TEXT name="MBNo"                                >No</TEXT>
+
+<TEXT name="Font1"                               >Helvetica Neue Bold</TEXT>
+<TEXT name="Font2"                               >Helvetica Neue Condensed Bold</TEXT>
+<TEXT name="Font3"                               >Helvetica Neue Bold Italic</TEXT>
+<TEXT name="Font4"                               >Helvetica Neue</TEXT>
+
+<TEXT name="Can't Undo"                          >Can't Undo</TEXT>
+<TEXT name="Can't Redo"                          >Can't Redo</TEXT>
+
+<!-- Freewheel popup menu items -->
+<TEXT name="Infinite"							 >Infinite</TEXT>
+<TEXT name="None"								 >None</TEXT>
+
+<!-- Freewheel address values -->
+<TEXT name="Sec0_1"								 >0.1 second</TEXT>
+<TEXT name="Sec0_2"								 >0.2 second</TEXT>
+<TEXT name="Sec0_5"								 >0.5 second</TEXT>
+<TEXT name="Sec1"								 >1 second</TEXT>
+<TEXT name="Sec2"								 >2 seconds</TEXT>
+<TEXT name="Sec5"								 >5 seconds</TEXT>
+<TEXT name="Sec10"								 >10 seconds</TEXT>
+
+<!-- Freewheel clock values (that aren't above in address values) -->
+<TEXT name="Sec30"								 >30 seconds</TEXT>
+<TEXT name="Min1"								 >1 minute</TEXT>
+<TEXT name="Min2"								 >2 minutes</TEXT>
+<TEXT name="Min5"								 >5 minutes</TEXT>
+
+<!-- Frame rate menu values -->
+<TEXT name="Fps23976"							 >23.976 fps</TEXT>
+<TEXT name="Fps24"							     >24 fps</TEXT>
+<TEXT name="Fps25"								 >25 fps</TEXT>
+<TEXT name="Fps2997d"							 >29.97 fps Drop</TEXT>
+<TEXT name="Fps2997nd"							 >29.97 fps Non-Drop</TEXT>
+<TEXT name="Fps30d"								 >30 fps Drop</TEXT>
+<TEXT name="Fps30nd"							 >30 fps Non-Drop</TEXT>
+<TEXT name="Fps30"								 >30 fps</TEXT>
+
+<!-- Clock mode list -->
+<TEXT name="Internal"							 >Internal</TEXT>
+<TEXT name="ADAT"								 >ADAT</TEXT>
+<TEXT name="SMPTE"								 >SMPTE</TEXT>
+
+<!-- Error Messages -->
+<TEXT name="CantChangeFrameRate"				 >The frame rate cannot be changed because another application is controlling it.\nIf you want to change the frame rate, please change it in </TEXT>
+<TEXT name="Warning"							 >Warning</TEXT>
+<TEXT name="Error"								 >Error</TEXT>
+<TEXT name="MotuSMPTESetup"						 >MOTU SMPTE Setup</TEXT>
+<TEXT name="AudioOnlyMode"						 >MOTU SMPTE Setup can only be used when the device is in audio only mode. Please use MOTU Video Setup to disable video.</TEXT>
+<TEXT name="UndefError"							 >An undefined error has occurred.</TEXT>
+<TEXT name="NoAudioDevices"						 >No MOTU Audio devices detected.</TEXT>
+<TEXT name="NotCompatible"						 >This application is not compatible with the MOTU 828 or MOTU 896.</TEXT>
+<TEXT name="FileIOError"						 >An error occoured during file operation.</TEXT>
+<TEXT name="VersionMismatch"					 >Version mismatch.  The application cannot communicate with the driver.</TEXT>
+<TEXT name="NoPCIFound"							 >No MOTU PCI Card Found</TEXT>
+<TEXT name="OSErr"								 >An OSErr error has occurred.</TEXT>
+<TEXT name="NotEnoughBandwidth"					 >Not enough bandwidth on Bus. If this is a USB Device it may not be connected to a USB 2.0 Bus. If 1394, then there may be too many devices on the bus</TEXT>
+<TEXT name="HardwareNotFound"					 >Hardware not found. Please make sure your hardware is powered and connected to your computer.</TEXT>
+
+
+<!-- Driver Errors -->
+<TEXT name="ErrorTitle"							 >MOTU Audio</TEXT>
+<TEXT name="DriverOSErrorMsg"					 >The driver has reported an OS error.</TEXT>
+<TEXT name="DriverHalErrorMsg"					 >The driver has reported a HAL error.</TEXT>
+<TEXT name="DriverKernelErrorMsg"				 >The driver has reported a kernel error.</TEXT>
+<TEXT name="DriverMOTUErrorMsg"					 >The driver has reported a MOTU error.</TEXT>
+<TEXT name="DriverUnixErrorMsg"					 >The driver has reported a Unix error.</TEXT>
+<TEXT name="DriverUnknownErrorMsg"				 >The driver has reported an unknown error.</TEXT>
+
+
+
+
+  </XSET>
+</resource_list>

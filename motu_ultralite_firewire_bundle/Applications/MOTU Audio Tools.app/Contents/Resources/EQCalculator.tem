@@ -1,0 +1,818 @@
+#ifndef EQCALCULATOR_EAY123198_TEM_
+#define EQCALCULATOR_EAY123198_TEM_
+/*********************************************************************************************
+
+	EQCalculator.tem
+	
+	A collection of functions for setting the filter coefficients
+	of (direct form) first and second order systems to achieve a 
+	desired EQ response.
+
+	Created 2 February 1997 Elron A. Yellin
+	Copyright 1997 Mark of the Unicorn, Inc.
+	
+*********************************************************************************************/
+#include <cmath>
+#include "EQCalculator.h"
+//#include "PluginUtils.h"
+#include "MathConstants.h"
+#include "PluginDebug.h"
+
+#include "fpscr.h"
+
+template<typename T>
+void	
+EQCalculator<T>::SetResonatorFilter(DFSOSFilterType& filter, T freq, T bw)	
+{
+	Bad_FPX_Tester x;
+	ASSERT(bw > 0 && bw < kPi);	// ideally 0 << bw << pi
+	
+	double beta = std::tan(0.5*bw);
+	beta = (1.0 - beta) / (1.0 + beta);
+	
+	T* b = filter.GetB();
+	T* a = filter.GetA();
+
+	double normfactor = 0.5 * (1 - beta);
+	b[DFSOSFilterType::b0] = normfactor;
+	b[DFSOSFilterType::b1] = 0.0;
+	b[DFSOSFilterType::b2] = -normfactor;
+	a[DFSOSFilterType::a1] = - (1.0 + beta) * std::cos(freq);
+	a[DFSOSFilterType::a2] = beta;
+
+	ASSERT(filter.IsStable());
+}
+
+// This is similar to a Butterworth filter, but instead of using a factor of sqrt(2)
+// to achieve a monotonic rolloff, a factor of sqrt(2)/Q is used to get a resonance
+// or bump in the frequency response
+template<typename T>
+void	
+EQCalculator<T>::SetResonantPassFilter(DFSOSFilterType& filter, T freq, T Q, bool low)	
+{
+	// MUST use doubles for intermediates
+	Bad_FPX_Tester x;
+	ASSERT(freq > 0 && freq < kPi);
+	double t = std::tan(0.5*freq);
+	double tc = t * -kRootTwo / Q;
+	double tsq = t*t;
+	ASSERT(1.0 - tc + tsq != 0.0);
+	double den = 1.0/(1.0 - tc + tsq);
+	
+	T* b = filter.GetB();
+	T* a = filter.GetA();
+
+	double sign = low ? 1.0 : -1.0;
+	double norm = 1.0;
+	// calculate a1
+	double a1 = -2.0*(1.0 - tsq)*den;
+	norm += sign*a1;
+	// calculate a2
+	double a2 = (1.0 + tc + tsq)*den;
+	norm += a2;
+	ASSERT(norm != 0.0);
+	double b0b2 = 0.25 * norm;
+	double b1 = 0.5*sign*norm;
+
+	a[DFSOSFilterType::a1] = a1;
+	a[DFSOSFilterType::a2] = a2;
+	b[DFSOSFilterType::b0] = b[DFSOSFilterType::b2] = b0b2;
+	b[DFSOSFilterType::b1] = b1;
+
+	ASSERT(filter.IsStable());
+}
+
+template<typename T>
+void	
+EQCalculator<T>::SetPeakFilter(DFSOSFilterType& filter, T freq, T gain, T bw, GainFactorFnc gainfnc)	
+{
+	Bad_FPX_Tester x;
+	ASSERT(bw > 0 && bw < kPi);	// ideally 0 << bw << pi
+	if (gain == 1.0)
+	{	
+		filter.SetFlat();
+		return;
+	}
+	double beta = std::tan(0.5*bw) * gainfnc(gain);
+	double OneOverOnePlusBeta = 1.0/(1.0+beta);		
+
+	gain *= 0.5;
+	double OnePlusGOver2 = 0.5 + gain;
+	double OneMinusGOver2 = 0.5 - gain;
+	
+	T* b = filter.GetB();
+	T* a = filter.GetA();
+
+	double a2 = OneOverOnePlusBeta - beta*OneOverOnePlusBeta;
+	double b0 = OnePlusGOver2 + OneMinusGOver2*a2;
+	double b1a1 = -2.0*std::cos(freq)*OneOverOnePlusBeta;
+	double b2 = OneMinusGOver2 + OnePlusGOver2*a2;		 
+
+	b[DFSOSFilterType::b0] = b0;
+	b[DFSOSFilterType::b2] = b2;
+	b[DFSOSFilterType::b1] = a[DFSOSFilterType::a1] = b1a1;
+	a[DFSOSFilterType::a2] = a2;
+
+	ASSERT(filter.IsStable());
+}
+
+template<typename T>
+void	
+EQCalculator<T>::SetPeakFilter(APLATSOSFilterType& filter, T freq, T gain, T bw, GainFactorFnc gainfnc)	
+{
+	Bad_FPX_Tester x;
+	
+	if (gain == 1.0)
+	{	
+		filter.SetFlat();
+		return;
+	}
+	
+	ASSERT(bw > 0 && bw < kPi);	// ideally 0 << bw << pi
+
+	double beta = std::tan(0.5*bw) * gainfnc(gain);
+	filter.SetK1(-std::cos(freq));
+	filter.SetK2((1.0 - beta) / (1.0 + beta));
+	filter.SetG(gain);
+	
+	ASSERT(filter.IsStable());
+}
+
+template<typename T>
+void
+EQCalculator<T>::SetShelfFilter(DFFOSFilterType& filter, T freq, T gain, bool low, GainFactorFnc gainfnc)	
+{
+	FPSCR::Saver f;
+	Bad_FPX_Tester x;
+	SetRoundingMode(kround_to_zero);	// round toward zero so poles don't get quantized
+									// outside the unit circle
+	
+	ASSERT(freq > 0 && freq < kPi);
+	if (gain == 1.0)
+	{	
+		filter.SetFlat();
+		return;
+	}
+
+	double beta = gainfnc(gain) * std::tan(0.5*(low ? freq : (kPi-freq)));
+	ASSERT(beta != -1.0);
+	double OneOverOnePlusBeta = 1.0/(1.0+beta);		
+
+	T* b = filter.GetB();
+	T* a = filter.GetA();
+
+	double a2 = OneOverOnePlusBeta - beta*OneOverOnePlusBeta;
+
+	gain *= 0.5;
+	double OnePlusGOver2 = 0.5 + gain;
+	double OneMinusGOver2 = 0.5 - gain;
+	
+	double b0 = OnePlusGOver2 + OneMinusGOver2*a2;
+	double b1a1 = 2.0 * OneOverOnePlusBeta; 
+	if (low) 
+		b1a1 = -b1a1;
+
+	b[DFFOSFilterType::b0] = b0; 
+	b[DFFOSFilterType::b1] = b1a1 + (low ? b0 : -b0);
+	a[DFFOSFilterType::a1] = b1a1 + (low ? 1.0 : -1.0);
+
+	ASSERT(filter.IsStable());
+}
+
+
+template<typename T>
+void
+EQCalculator<T>::SetShelfFilter(DFSOSFilterType& filter, T freq, T gain, bool low, GainFactorFnc gainfnc)	
+{
+	FPSCR::Saver f;
+	Bad_FPX_Tester x;
+	SetRoundingMode(kround_to_zero);	// round toward zero so poles don't get quantized
+										// outside the unit circle
+	
+	ASSERT(freq > 0 && freq < kPi);
+	if (gain == 1.0)
+	{	
+		filter.SetFlat();
+		return;
+	}
+
+	double beta = gainfnc(gain) * std::tan(0.5*(low ? freq : (kPi-freq)));
+	ASSERT(beta != -1.0);
+	double OneOverOnePlusBeta = 1.0/(1.0+beta);		
+
+	T* b = filter.GetB();
+	T* a = filter.GetA();
+
+	// calculate just like peak/notch filter:
+	double a2 = OneOverOnePlusBeta - beta*OneOverOnePlusBeta;
+
+	gain *= 0.5;
+	double OnePlusGOver2 = 0.5 + gain;
+	double OneMinusGOver2 = 0.5 - gain;
+	
+	double b0 = OnePlusGOver2 + OneMinusGOver2*a2;
+	double b1a1 = 2.0 * OneOverOnePlusBeta; 
+	if (low) 
+		b1a1 = -b1a1;
+	//double b2 = OneMinusGOver2 + OnePlusGOver2*a2;		 
+	
+	// but instead of having a pole at 1 (or -1 for high shelf) we want it at 0 
+	// the num/denumerator eq. is 1 + -(pole1 + pole2)z^-1 + pole1*pole2 = (1 - pole1*z^1)(1 - pole2*z^1)
+	// a1 = -(pole1 + pole2) so we need to add 1 to a1 when low shelf and subtract 1 for high
+	// a2 = pole1*pole2 so we need to zero a2
+	// similar for b1 and b2 except we need to first normalize
+	// by b0 since it's not 1
+	b[DFSOSFilterType::b0] = b0; 
+	b[DFSOSFilterType::b1] = b1a1 + (low ? b0 : -b0);
+	b[DFSOSFilterType::b2] = 0.0;
+	a[DFSOSFilterType::a1] = b1a1 + (low ? 1.0 : -1.0);
+	a[DFSOSFilterType::a2] = 0.0;
+
+	ASSERT(filter.IsStable());
+}
+
+template<typename T>
+void	
+EQCalculator<T>::SetShelfFilter(APLATSOSFilterType& filter, T freq, T gain, bool low, GainFactorFnc gainfnc)	
+{
+	FPSCR::Saver f;
+	Bad_FPX_Tester x;
+	
+	ASSERT(freq > 0 && freq < kPi);
+	if (gain == 1.0)
+	{	
+		filter.SetFlat();
+		return;
+	}
+
+	double beta = gainfnc(gain) * std::tan(0.5 * (low ? freq : (kPi-freq)));
+	filter.SetK1(low ? -1.0 : 1.0);	// -cos(w), w = 0 or pi
+	filter.SetK2((1.0 - beta) / (1.0 + beta));
+	filter.SetG(gain);
+	
+	ASSERT(filter.IsStable());
+}
+
+template<typename T>
+void	
+EQCalculator<T>::SetShelfFilter(APLATFOSFilterType& filter, T freq, T gain, bool low, GainFactorFnc gainfnc)	
+{
+	FPSCR::Saver f;
+	Bad_FPX_Tester x;
+	
+	ASSERT(freq > 0 && freq < kPi);
+	if (gain == 1.0)
+	{	
+		filter.SetFlat();
+		return;
+	}
+
+	double beta = gainfnc(gain) * std::tan(0.5 * (low ? freq : (kPi-freq)));
+	filter.SetK((low ? 1.0 : -1.0) * (beta - 1.0) / (1.0 + beta));
+	filter.SetN(low ? -1.0 : 1.0);
+	filter.SetG(gain);
+	
+	ASSERT(filter.IsStable());
+}
+
+template<typename T>
+void
+EQCalculator<T>::SetShelfFilter(DFSOSFilterType& filter, T freq, T gain, T overshoot, bool low, GainFactorFnc gainfnc)
+{
+	// MUST use doubles for intermediates
+	Bad_FPX_Tester x;
+	ASSERT(freq > 0 && freq < kPi);
+	if (gain == 1.0)
+	{	
+		filter.SetFlat();
+		return;
+	}
+	
+
+	// Computes transfer function coefficients b and a for a
+	// second-order low shelving filter with normalized cutoff
+	// frequency freq, linear gain level gain, and percent overshoot
+	// scale factor overshoot
+		
+	double K = std::tan(freq/2);
+	double Ksq = K*K;	
+	double Vb, Vc;
+	double Qb, Qc;
+	
+	if (gain >= 1.0)
+	{
+		Vb = gain;
+		Vc = 1.0;
+		Qb = std::pow(gain,overshoot);
+		Qc = 1.0;
+	}
+	else
+	{
+		ASSERT( gain > 0.0 );
+		Vb = 1.0;
+		Vc = 1.0/gain;
+		Qb = 1.0;
+		Qc = 1.0/std::pow(gain,overshoot);
+	}
+	
+	// For overshoot >= 0, we use the asymetrical set Qb and Qc.
+	// for overshoot < 0, we fuse Qb and Qc to be the same.
+	if( overshoot < 0.0 )
+		Qb = Qc = std::min(Qb,Qc);
+		
+	
+	double	b0,b1,b2;
+	double	a1,a2;
+	
+	if (low) // Low Shelf Filter
+	{
+		double kb = K*std::sqrt(2*Vb)/Qb;
+		double kc = K*std::sqrt(2*Vc)/Qc;
+		
+		double den = 1 + kc + Vc*Ksq;
+		ASSERT(den != 0.0);
+
+		b0 = (1 + kb + Vb*Ksq)/den;
+		b1 = 2*(Vb*Ksq - 1)/den;
+		b2 = (1 - kb + Vb*Ksq)/den;
+		a1 = 2*(Vc*Ksq - 1)/den;
+		a2 = (1 - kc + Vc*Ksq)/den;
+	}
+	else // High Shelf Filter
+	{
+		double kb = K*std::sqrt(2*Vb)/Qb;
+		double kcm = K*std::sqrt(2*Vc)/Qc;
+		double kcd = K*std::sqrt(2/Vc)/Qc;
+		
+		double den1 = Vc + kcm + Ksq;
+		double den2 = 1 + kcd + Ksq/Vc;
+		ASSERT(den1 != 0.0 and den2 != 0.0);
+		
+		b0 = (Vb + kb + Ksq)/den1;
+		b1 = 2*(Ksq - Vb)/den1;
+		b2 = (Vb - kb + Ksq)/den1;
+		a1 = 2*(Ksq/Vc - 1)/den2;
+		a2 = (1 - kcd + Ksq/Vc)/den2;
+	}
+	
+	T* b = filter.GetB();
+	T* a = filter.GetA();
+
+	a[DFSOSFilterType::a1] = a1;
+	a[DFSOSFilterType::a2] = a2;
+	b[DFSOSFilterType::b0] = b0;
+	b[DFSOSFilterType::b1] = b1;
+	b[DFSOSFilterType::b2] = b2;
+
+	ASSERT(filter.IsStable());
+}
+
+template<typename T>
+void
+EQCalculator<T>::ToggleShelfBand(DFSOSFilterType& filter)
+{ 
+	Bad_FPX_Tester x;
+	filter.GetB()[DFSOSFilterType::b1] *= -1.0;
+	filter.GetA()[DFSOSFilterType::a1] *= -1.0;
+
+	ASSERT(filter.IsStable());
+}
+
+template<typename T>
+const T 
+EQCalculator<T>::EQGainFactor(T gain)
+{
+	Bad_FPX_Tester x;
+	double GainSquared = gain*gain;
+	double BandEdgeGainSquared;
+	if (GainSquared > 2.0)  // i.e. Gain (dB) > 3 dB
+		BandEdgeGainSquared = 0.5*GainSquared; // Band Edge Gain (dB) is Gain (dB) - 3 dB
+	else if (GainSquared < 0.5) // i.e. Gain (dB) < -3 dB
+		BandEdgeGainSquared = 2.0*GainSquared; // Band Edge Gain (dB) is Gain (dB) + 3 dB
+	else
+		BandEdgeGainSquared = gain;	// degenerate case-- |Gain (dB)| is less than 3 dB
+									// set band edge gain (dB) to gain/2 (dB)
+		
+	ASSERT(GainSquared != BandEdgeGainSquared && 
+			((BandEdgeGainSquared - 1.0 >= 0) == (GainSquared - BandEdgeGainSquared >= 0.0)));
+		
+	return std::sqrt((BandEdgeGainSquared - 1.0)/(GainSquared - BandEdgeGainSquared));
+}
+
+template<typename T>
+const T 
+EQCalculator<T>::MidpointGainFactor(T gain)
+{
+	Bad_FPX_Tester x;
+	ASSERT(gain != 0.0);
+	
+	// Given that g (linear) <=> G (dB),
+	// this returns -G/2 (dB)
+		
+	return std::sqrt(T(1.0)/gain);
+}
+
+
+
+const float kCosPiOverFour = 0.70710678118655;
+const float kCosPiOverThree = 0.5f;
+const float kCosPiOverEight = 0.92387953251129f;
+const float kCosThreePiOverEight = 0.38268343236509f;
+const float kCosPiOverFive = 0.80901699437495;
+const float kCosTwoPiOverFive = 0.30901699437495;
+const float kCosPiOverTwelve = 0.96592582628907;
+const float kCosFivePiOverTwelve = 0.25881904510252;
+
+template<typename T>
+void EQCalculator<T>::ButterSOS(DFSOSFilterType& dfsos, T freq, bool low, int order, 
+								int section)	
+{
+	ASSERT(order >= 0);
+	ASSERT(order == 0 or InOpenInterval(freq, 0.0, kPi));
+	Bad_FPX_Tester x;
+	T gain = 0;
+	if (order == 1)
+	{
+		// warp the cutoff freq for the analog filter
+		T Omega = std::tan(0.5f * freq);
+
+		T OneOverOmegaPlusOne = Numerics::inv(Omega + 1.0f);
+		if (low)
+		{
+			// zero at z = -1, numerator is norm * (1 + z^-1)
+			// norm is calculated from numerator/denominator = 1 when z = 1
+			T norm = Omega * OneOverOmegaPlusOne;
+			dfsos.GetB()[DFFOSFilterType::b0] = norm;
+			dfsos.GetB()[DFFOSFilterType::b1] = norm;
+		}
+		else
+		{
+			// zero at z = 1, numerator is norm * (1 - z^-1)
+			// norm is calculated from numerator/denominator = 1 when z = -1
+			T norm = OneOverOmegaPlusOne;
+			dfsos.GetB()[DFFOSFilterType::b0] = norm;
+			dfsos.GetB()[DFFOSFilterType::b1] = -norm;
+		}
+	
+		// pole at s = -Omega -> (1 - Omega) / (1 + Omega) by bilinear transform
+		dfsos.GetA()[DFFOSFilterType::a1] = (Omega - 1) * OneOverOmegaPlusOne;
+		dfsos.GetB()[DFSOSFilterType::b2] = 0;
+		dfsos.GetA()[DFSOSFilterType::a2] = 0;
+
+		ASSERT(dfsos.IsStable());
+	}
+	else if (order > 1)
+	{
+		if (order == 2)
+		{
+			gain = kCosPiOverFour;
+		}
+		else if (order == 3)
+		{
+			ASSERT(section == 0);
+			gain = kCosPiOverThree;
+		}
+		else if (order == 4)
+		{
+			if (section == 0)
+				gain = kCosPiOverEight;
+			else
+				gain = kCosThreePiOverEight;
+		}
+		else if (order == 5)
+		{
+			if (section == 0)
+				gain = kCosPiOverFive;
+			else
+				gain = kCosTwoPiOverFive;
+		}
+		else if (order == 6)
+		{
+			if (section == 0)
+				gain = kCosPiOverTwelve;
+			else if (section == 1)
+				gain = kCosPiOverFour;
+			else
+				gain = kCosFivePiOverTwelve;
+		}	
+			
+		// potential optimization: implement sin_and_cos(w)
+		T cosf = std::cos(freq);
+		T alpha = gain * std::sin(freq);
+		T den = 1.0f / (1.0f + alpha);
+	
+		T b0, b1;
+		if (low)
+		{
+			b0 = (0.5f - 0.5f * cosf) * den;
+			b1 = 2.0f * b0;
+		}
+		else
+		{
+			b0 = (0.5f + 0.5f * cosf) * den;
+			b1 = -2.0f * b0;
+		}
+	
+		dfsos.GetB()[DFSOSFilterType::b0] = b0;
+		dfsos.GetB()[DFSOSFilterType::b1] = b1;
+		dfsos.GetB()[DFSOSFilterType::b2] = b0;
+	
+		dfsos.GetA()[DFSOSFilterType::a1] = -2.0f * cosf * den;
+		dfsos.GetA()[DFSOSFilterType::a2] = (1.0f - alpha) * den;
+
+		ASSERT(dfsos.IsStable());
+	
+	}
+	else
+	{
+		dfsos.GetB()[DFSOSFilterType::b0] = 1.0;
+		dfsos.GetB()[DFSOSFilterType::b1] = 0.0;
+		dfsos.GetB()[DFSOSFilterType::b2] = 0.0;
+	
+		dfsos.GetA()[DFSOSFilterType::a1] = 0.0;
+		dfsos.GetA()[DFSOSFilterType::a2] = 0.0;
+	}
+}
+
+template<typename T>
+void EQCalculator<T>::ButterSOS(DFSOSFilterType& dfsos, T freq, T invQ, bool low,
+								int order, int section)	
+{
+	ASSERT(order >= 0);
+	ASSERT(order == 0 or InOpenInterval(freq, 0.0, kPi));
+	Bad_FPX_Tester x;
+	T gain;
+	if (order == 1)
+	{
+		// warp the cutoff freq for the analog filter
+		T Omega = std::tan(0.5f * freq);
+
+		T OneOverOmegaPlusOne = inv(Omega + 1.0f);
+		if (low)
+		{
+			// zero at z = -1, numerator is norm * (1 + z^-1)
+			// norm is calculated from numerator/denominator = 1 when z = 1
+			T norm = Omega * OneOverOmegaPlusOne;
+			dfsos.GetB()[DFFOSFilterType::b0] = norm;
+			dfsos.GetB()[DFFOSFilterType::b1] = norm;
+		}
+		else
+		{
+			// zero at z = 1, numerator is norm * (1 - z^-1)
+			// norm is calculated from numerator/denominator = 1 when z = -1
+			T norm = OneOverOmegaPlusOne;
+			dfsos.GetB()[DFFOSFilterType::b0] = norm;
+			dfsos.GetB()[DFFOSFilterType::b1] = -norm;
+		}
+	
+		// pole at s = -Omega -> (1 - Omega) / (1 + Omega) by bilinear transform
+		dfsos.GetA()[DFFOSFilterType::a1] = (Omega - 1) * OneOverOmegaPlusOne;
+		dfsos.GetB()[DFSOSFilterType::b2] = 0;
+		dfsos.GetA()[DFSOSFilterType::a2] = 0;
+
+		ASSERT(dfsos.IsStable());
+	}
+	else if (order > 1)
+	{
+		if (order == 2)
+		{
+			gain = kCosPiOverFour * invQ;
+		}
+		else if (order == 3)
+		{
+			ASSERT(section == 0);
+			gain = kCosPiOverThree * invQ;
+		}
+		else if (order == 4)
+		{
+			if (section == 0)
+				gain = kCosPiOverEight * std::sqrt(invQ);
+			else
+				gain = kCosThreePiOverEight * std::sqrt(invQ);
+		}
+		else if (order == 5)
+		{
+			if (section == 0)
+				gain = kCosPiOverFive * invQ;
+			else
+				gain = kCosTwoPiOverFive * invQ;
+		}
+		else if (order == 6)
+		{
+			if (section == 0)
+				gain = kCosPiOverTwelve * invQ;
+			else if (section == 1)
+				gain = kCosPiOverFour * invQ;
+			else
+				gain = kCosFivePiOverTwelve * invQ;
+		}	
+			
+		// potential optimization: implement sin_and_cos(w)
+		T cosf = std::cos(freq);
+		T alpha = gain * std::sin(freq);
+		T den = 1.0f / (1.0f + alpha);
+	
+		T b0, b1;
+		if (low)
+		{
+			b0 = (0.5f - 0.5f * cosf) * den;
+			b1 = 2.0f * b0;
+		}
+		else
+		{
+			b0 = (0.5f + 0.5f * cosf) * den;
+			b1 = -2.0f * b0;
+		}
+	
+		dfsos.GetB()[DFSOSFilterType::b0] = b0;
+		dfsos.GetB()[DFSOSFilterType::b1] = b1;
+		dfsos.GetB()[DFSOSFilterType::b2] = b0;
+	
+		dfsos.GetA()[DFSOSFilterType::a1] = -2.0f * cosf * den;
+		dfsos.GetA()[DFSOSFilterType::a2] = (1.0f - alpha) * den;
+
+		ASSERT(dfsos.IsStable());
+	
+	}
+	else
+	{
+		dfsos.GetB()[DFSOSFilterType::b0] = 1.0;
+		dfsos.GetB()[DFSOSFilterType::b1] = 0.0;
+		dfsos.GetB()[DFSOSFilterType::b2] = 0.0;
+	
+		dfsos.GetA()[DFSOSFilterType::a1] = 0.0;
+		dfsos.GetA()[DFSOSFilterType::a2] = 0.0;
+	}
+		
+}
+
+template<typename T>
+void EQCalculator<T>::SetPassFilter(DFFOSFilterType& dffos, T freq, bool low)	
+{
+	Bad_FPX_Tester x;
+	ASSERT(InOpenInterval(freq, 0.0, kPi));
+	// warp the cutoff freq for the analog filter
+	float Omega = std::tan(0.5f * freq);
+
+	float OneOverOmegaPlusOne = Numerics::inv(Omega + 1.0f);
+	if (low)
+	{
+		// zero at z = -1, numerator is norm * (1 + z^-1)
+		// norm is calculated from numerator/denominator = 1 when z = 1
+		float norm = Omega * OneOverOmegaPlusOne;
+		dffos.GetB()[DFFOSFilterType::b0] = norm;
+		dffos.GetB()[DFFOSFilterType::b1] = norm;
+	}
+	else
+	{
+		// zero at z = 1, numerator is norm * (1 - z^-1)
+		// norm is calculated from numerator/denominator = 1 when z = -1
+		float norm = OneOverOmegaPlusOne;
+		dffos.GetB()[DFFOSFilterType::b0] = norm;
+		dffos.GetB()[DFFOSFilterType::b1] = -norm;
+	}
+	
+	// pole at s = -Omega -> (1 - Omega) / (1 + Omega) by bilinear transform
+	dffos.GetA()[DFFOSFilterType::a1] = (Omega - 1) * OneOverOmegaPlusOne;
+
+	ASSERT(dffos.IsStable());
+}
+
+
+// Second order Butterworth filter.
+// Double zero at z = -1 (LPF) or z = 1 (HPF), 
+// so numerator is a multiple of [1 2 1] or [1 -2 1]
+// freq is in radians/sample, ie freq = 2*pi/Fs*FreqInHertz
+template<typename T>
+void
+EQCalculator<T>::SetPassFilter(DFSOSFilterType& filter, T freq, bool low)
+{
+	// MUST use doubles for intermediates
+	Bad_FPX_Tester x;
+	ASSERT(freq > 0 && freq < kPi);
+	double t = std::tan(0.5*freq);
+	double tc = t * -kRootTwo;
+	double tsq = t*t;
+	ASSERT(1.0 - tc + tsq != 0.0);
+	double den = 1.0/(1.0 - tc + tsq);
+	
+	T* b = filter.GetB();
+	T* a = filter.GetA();
+
+	double sign = low ? 1.0 : -1.0;
+	double norm = 1.0;
+	// calculate a1
+	double a1 = -2.0*(1.0 - tsq)*den;
+	norm += sign*a1;
+	// calculate a2
+	double a2 = (1.0 + tc + tsq)*den;
+	norm += a2;
+	ASSERT(norm != 0.0);
+	double b0b2 = 0.25 * norm;
+	double b1 = 0.5*sign*norm;
+
+	a[DFSOSFilterType::a1] = a1;
+	a[DFSOSFilterType::a2] = a2;
+	b[DFSOSFilterType::b0] = b[DFSOSFilterType::b2] = b0b2;
+	b[DFSOSFilterType::b1] = b1;
+
+	ASSERT(filter.IsStable());
+}
+
+template<typename T>
+void
+EQCalculator<T>::SetPassFilter(ButterSOSFilterType& filter, T freq, bool low)
+{
+	// MUST use doubles for intermediates
+	Bad_FPX_Tester x;
+	ASSERT(freq > 0 && freq < kPi);
+	double t = std::tan(0.5*freq);
+	double tc = t * -kRootTwo;
+	double tsq = t*t;
+	ASSERT(1.0 - tc + tsq != 0.0);
+	double den = 1.0/(1.0 - tc + tsq);
+	
+	T* a = filter.GetA();
+
+	double sign = low ? 1.0 : -1.0;
+	double norm = 1.0;
+	// calculate a1
+	double a1 = -2.0*(1.0 - tsq)*den;
+	norm += sign*a1;
+	// calculate a2
+	double a2 = (1.0 + tc + tsq)*den;
+	norm += a2;
+	ASSERT(norm != 0.0);
+	norm *= 0.25;
+
+	a[ButterSOSFilterType::a0] = norm;
+	norm = Numerics::inv(norm);
+	a[ButterSOSFilterType::a1] = a1 * norm;
+	a[ButterSOSFilterType::a2] = a2 * norm;
+	if (low)
+		filter.SetLowPass();
+	else
+		filter.SetHighPass();
+
+	ASSERT(filter.IsStable());
+}
+
+template<typename T>
+void
+EQCalculator<T>::TogglePassBand(DFSOSFilterType& filter)
+{
+	Bad_FPX_Tester x;
+	T* b = filter.GetB();
+	T* a = filter.GetA();
+
+	// If the filter is currently lowpass, b1 will be positive, otherwise it will be negative
+	double sign = (b[DFSOSFilterType::b1] > 0 ? -1.0 : 1.0);	
+	double norm = 1.0;
+	norm += sign*(a[DFSOSFilterType::a1]);
+	norm += a[DFSOSFilterType::a2];
+	
+	b[DFSOSFilterType::b0] = b[DFSOSFilterType::b2] = 0.25 * norm;
+	b[DFSOSFilterType::b1] = 0.5*sign*norm;
+
+	ASSERT(filter.IsStable());
+}
+
+// This is a real notch, as opposed to the peak/notch filter above
+template<typename T>
+void	
+EQCalculator<T>::SetNotchFilter(DFSOSFilterType& filter, T freq, T bw)	
+{
+	Bad_FPX_Tester x;
+	
+	double beta = (1.0 - std::tan(0.5*bw)) / (1.0 + std::tan(0.5*bw));
+	double gamma = -std::cos(freq);
+	
+	T* b = filter.GetB();
+	T* a = filter.GetA();
+	
+	double OnePlusBetaOver2 = 0.5 + 0.5 * beta;
+	b[DFSOSFilterType::b0] = b[DFSOSFilterType::b2] = OnePlusBetaOver2;
+	a[DFSOSFilterType::a1] = b[DFSOSFilterType::b1] = 2.0 * gamma * OnePlusBetaOver2;
+	a[DFSOSFilterType::a2] = beta;
+	
+
+	ASSERT(filter.IsStable());
+}
+
+template<typename T>
+void	
+EQCalculator<T>::SetNotchFilter(APLATSOSFilterType& filter, T freq, T bw)	
+{
+	Bad_FPX_Tester x;
+	
+	double beta = (1.0 - std::tan(0.5*bw)) / (1.0 + std::tan(0.5*bw));
+	double gamma = -std::cos(freq);
+	
+	filter.SetK1(gamma);
+	filter.SetK2(beta);
+	filter.SetG(0.0);
+
+	ASSERT(filter.IsStable());
+}
+
+#endif // EQCALCULATOR_EAY123198_TEM_

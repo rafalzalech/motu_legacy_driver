@@ -1,0 +1,17 @@
+
+PRODUCT_NAME		= MOTU Audio Setup
+INFOPLIST_FILE		= Info.plist
+WRAPPER_EXTENSION	= app
+MOTU_DRIVERS_ROOT   = $(PROJECT_DIR)/../../..
+SYMROOT				= $(MOTU_DRIVERS_ROOT)/Builds/Mac
+OBJROOT				= $(SYMROOT)/Intermediates	// put intermediates here to reduce clutter
+
+#include "../../../Prefix/Mac/xcconfigs/MOTUDriverVersion.xcconfig"
+
+INFOPLIST_FILE = Info.plist
+OTHER_LDFLAGS = $(OTHER_LDFLAGS) -l xml2
+GCC_WARN_UNUSED_VARIABLE = YES
+HEADER_SEARCH_PATHS =  "$(MOTU_DRIVERS_ROOT)/AwesomeLib/Includes"
+GCC_PREFIX_HEADER = $(SRCROOT)/../Source/Prefix.pch
+
+
