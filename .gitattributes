@@ -1,0 +1,2 @@
+# Generated email patches contain unified-diff marker whitespace by design.
+*.patch -whitespace

@@ -1,1 +1,10 @@
 .DS_Store
+
+# Reproducible ASFireWire checkout and local build products.
+motu_tahoe_driver/build/
+motu_tahoe_driver/ASFW.app/
+
+# Build and packaging artifacts are local-only. Every user builds and signs
+# their own copy.
+motu_tahoe_driver/artifacts/
+*.new
